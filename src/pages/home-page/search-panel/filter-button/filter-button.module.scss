@@ -1,0 +1,66 @@
+@import 'src/variables';
+
+.filterButton {
+  transition: 1s;
+  margin-left: 14%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+
+  @media (min-width: 768px) {
+    margin-left: 45%;
+  }
+  @media (min-width: 1000px) {
+    margin-left: 30%;
+  }
+  @media (min-width: 1200px) {
+    margin-left: 35%;
+  }
+  .dropdown {
+    margin: 0 auto;
+    user-select: none;
+    .dropdownBtn {
+      position: absolute;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: var(--SearchPanelButtonWidth);
+      height: var(--SearchPanelButtonHeight);
+      box-shadow: 0 2px 4px rgba(191, 196, 201, 0.2), 0 3px 4px rgba(191, 196, 201, 0.18),
+        0 1px 5px rgba(191, 196, 201, 0.24);
+      border-radius: 599px;
+      @media (min-width: 768px) {
+        width: 150px;
+        justify-content: start;
+
+        & svg {
+          margin-left: 10px;
+        }
+        & p {
+          margin-left: 10px;
+        }
+      }
+      .filterName {
+        text-align: center;
+        display: none;
+        @media (min-width: 768px) {
+          display: inline;
+        }
+      }
+    }
+    .dropdownContent {
+      border: 1px solid gray;
+      margin-top: var(--SearchPanelButtonHeight);
+      .dropdownItem {
+        transition: all 0.2s;
+
+        &:hover {
+          background: #bfc4c9;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

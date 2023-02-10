@@ -1,0 +1,10 @@
+@import 'src/variables';
+
+.Layout {
+  padding: 0 $paddingLeftRight;
+}
+.wrapperContent {
+  width: 100%;
+
+  min-height: calc(98.5vh - var(--headerHeight) - var(--footerHeight));
+}

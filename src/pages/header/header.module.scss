@@ -1,0 +1,70 @@
+@import 'src/variables';
+
+.header {
+  height: var(--headerHeight);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: white;
+  z-index: 10;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 40%;
+  @media (max-width: 1250px) {
+    width: 50%;
+  }
+  @media (max-width: 1000px) {
+    width: 40%;
+  }
+  @media (max-width: 850px) {
+    width: 45%;
+  }
+  @media (max-width: 700px) {
+    width: 50%;
+  }
+  @media (max-width: 640px) {
+    width: 40%;
+  }
+  @media (max-width: 480px) {
+    width: 55%;
+  }
+  @media (max-width: 350px) {
+    width: 60%;
+  }
+
+  .logo {
+    width: max-content;
+
+    @media (max-width: 1000px) {
+      display: none;
+    }
+  }
+  .libraryTitle {
+    @include text(18px, 700, 28px, #363636);
+
+    @media (min-width: 640px) {
+      font-size: 32px;
+    }
+  }
+}
+.account {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .name {
+    padding-right: $paddingMedium;
+    @include text(14px, 600, 18px, #363636);
+
+    text-align: right;
+    letter-spacing: 0.1px;
+  }
+  @media (max-width: 1000px) {
+    display: none;
+  }
+}
