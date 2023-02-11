@@ -35,6 +35,12 @@
       justify-content: center;
       align-items: center;
       padding-top: $paddingMedium;
+
+
+        img {
+            width: 175px;
+            height: 245px;
+        }
     }
 
     .stars {
@@ -64,6 +70,14 @@
       .author {
         padding: $paddingSmall $paddingMedium 0;
         @include text(12px, 400, 18px, #727272);
+
+          @media (max-width: 370px) {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp: 1;
+              -webkit-box-orient: vertical;
+          }
       }
     }
   }
@@ -92,13 +106,28 @@
     .cover {
       float: left;
 
+        img {
+
+            padding-bottom: 10%;
+
+            @media (max-width: 768px) {
+                //width: 120px;
+                //height: 172px;
+            }
+            @media (max-width: 590px) {
+                height: 200px;
+            }
+            @media (max-width: 480px) {
+                height: 170px;
+            }
+
+
+        }
       @media (max-width: 590px) {
         width: 30%;
       }
 
-      & img {
-        width: 85%;
-      }
+
     }
     .wrapper {
       height: inherit;

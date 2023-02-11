@@ -4,7 +4,8 @@ import { NavLink } from 'react-router-dom';
 import { countStars } from '../../../helpers/stars-helper';
 import emptyStar from '../../../assets/images/stars/emptyStar.svg';
 import wholeStar from '../../../assets/images/stars/star.svg';
-import { Button } from '../../../common/button/button.jsx';
+import catBook from '../../../assets/images/books/bookCat.svg';
+import { Button } from "../../../common/button";
 import { getBooks } from '../../../redux-toolkit/books-selectos';
 
 import s from './book-card.module.scss';
@@ -15,14 +16,14 @@ export const BookCard: React.FC<Book> = ({ isSortingList }) => {
   return (
     <div className={`${s.book} ${isSortingList && s.bookList} ${!isSortingList && s.bookSquare}`}>
       {books.map((book) => {
-        const stars = countStars(book.stars);
+        const stars = countStars(book.rating);
 
         return (
           <div className={s.bookWrapper} key={book.id}>
             <NavLink to={`/books/all/&id=${book.id}`}>
               <div data-test-id='card' key={book.id} className={s.BookItem}>
                 <div className={s.cover}>
-                  <img alt='cover' src={book.cover} />
+                  <img alt='cover' src={book.image ? `https://strapi.cleverland.by${book.image.url}` : catBook} />
                 </div>
                 <div className={s.wrapper}>
                   <div className={s.stars}>
@@ -35,13 +36,13 @@ export const BookCard: React.FC<Book> = ({ isSortingList }) => {
                     ))}{' '}
                   </div>
                   <div className={s.info}>
-                    <div className={s.name}>{book.name}</div>
+                    <div className={s.name}>{book.title}</div>
                     <div className={s.author}>
-                      {book.author}, {book.year}
+                      {book.authors}, {book.issueYear}
                     </div>
                   </div>
                   <div className={s.button}>
-                    <Button isActive={book.state} date={book.date} />
+                    <Button booking={book.booking}  />
                   </div>
                 </div>
               </div>

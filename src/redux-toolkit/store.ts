@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import bookReducer from './book-reducer';
-import booksReducer from './books-reducer';
+import booksSlice from './books-reducer';
 
 const rootReducer = combineReducers({
-  booksBranch: booksReducer,
+  booksBranch: booksSlice,
   bookBranch: bookReducer,
 });
 
@@ -13,3 +13,4 @@ export const store = configureStore({
 });
 type RootReducerType = typeof rootReducer;
 export type AppStateType = ReturnType<RootReducerType>;
+export type AppDispatch = typeof store.dispatch

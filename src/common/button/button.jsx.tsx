@@ -1,10 +1,10 @@
 import React from 'react';
 
 import s from './button.module.scss';
+import { BookingType } from "../../redux-toolkit/books-reducer";
 
 export const Button: React.FC<ButtonType> = ({
-  isActive,
-  date,
+ booking,
   isBookPage = false,
   bookPageText = '',
   isBookEstimate = false,
@@ -12,17 +12,17 @@ export const Button: React.FC<ButtonType> = ({
 }) => (
   <div
     data-test-id={id}
-    className={` ${s.button} ${isActive ? s.buttonActive : s.buttonBlock} ${isBookPage && s.buttonBookPage}  ${
+    className={` ${s.button} ${!booking ? s.buttonActive : s.buttonBlock} ${isBookPage && s.buttonBookPage}  ${
       isBookEstimate && s.buttonBookPageEstimate
     } `}
   >
     {' '}
     <p>
       {' '}
-      {!bookPageText && isActive
+      {!bookPageText && !booking
         ? 'ЗАБРОНИРОВАТЬ'
-        : !bookPageText && date !== ''
-        ? `ЗАНЯТО ДО ${date}`
+        : !bookPageText && booking?.dateOrder !== ''
+        ? `ЗАНЯТО ДО ${booking?.dateOrder}`
         : !bookPageText && 'ЗАБРОНИРОВАНО'}
       {!!bookPageText && bookPageText}{' '}
     </p>{' '}
@@ -30,8 +30,8 @@ export const Button: React.FC<ButtonType> = ({
 );
 
 type ButtonType = {
-  isActive?: boolean;
-  date?: string;
+    booking?: null | BookingType;
+
   isBookPage?: boolean;
   isBookEstimate?: boolean;
   bookPageText?: string;

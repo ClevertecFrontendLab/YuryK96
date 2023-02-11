@@ -115,7 +115,7 @@ export const BookPage: React.FC = () => {
               {book.author} {book.year}
             </div>
             <div className={s.button}>
-              <Button isBookPage={true} isActive={book.state} date={book.date} />
+              <Button isBookPage={true} booking={null}/>
             </div>
           </div>
           <div className={s.about}>
@@ -187,7 +187,7 @@ export const BookPage: React.FC = () => {
 
         <BookComments book={book} />
 
-        <Button id='button-rating' isBookEstimate={true} isActive={true} bookPageText='ОЦЕНИТЬ КНИГУ' />
+        <Button id='button-rating' isBookEstimate={true} booking={null} bookPageText='ОЦЕНИТЬ КНИГУ' />
       </div>
     </section>
   );

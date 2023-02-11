@@ -1,126 +1,114 @@
-import { createReducer } from '@reduxjs/toolkit';
+/* eslint-disable */
+import { createAsyncThunk, createReducer, createSlice } from "@reduxjs/toolkit";
+import axios, { AxiosError } from "axios";
+import algorithms from "../assets/images/books/algorithms.svg";
+import bookCat from "../assets/images/books/bookCat.svg";
 
-import algorithms from '../assets/images/books/algorithms.svg';
-import bookCat from '../assets/images/books/bookCat.svg';
+import { AppDispatch, AppStateType } from "./store";
 
-const initialState: InitialState = {
-  books: [
-    {
-      cover: bookCat,
-      id: 0,
-      stars: 5,
-      name: 'Грокаем алгоритмы. Иллюстрированное пособие для программистов и любопытствующих',
-      author: 'Адитья Бхаргава',
-      year: 2019,
-      state: true,
-      date: '',
-    },
-    {
-      cover: algorithms,
-      id: 1,
-      stars: 4,
-      name: 'Грокаем алгоритмы. Иллюстрированное пособие для  ',
-      author: 'Адитья Бхаргава',
-      year: 2019,
-      state: false,
-      date: '03.05',
-    },
-    {
-      cover: algorithms,
-      id: 2,
-      stars: 3,
-      name: 'Программирование на Java',
-      author: 'Адитья Бхаргава',
-      year: 2019,
-      state: false,
-      date: '',
-    },
-    {
-      cover: bookCat,
-      id: 4,
-      stars: 2,
-      name: 'Грокаем алгоритмы',
-      author: 'Адитья Бхаргава',
-      year: 2019,
-      state: true,
-      date: '',
-    },
-    {
-      cover: bookCat,
-      id: 5,
-      stars: 2,
-      name: 'Грокаем алгоритмы',
-      author: 'Адитья Бхаргава',
-      year: 2019,
-      state: true,
-      date: '',
-    },
-    {
-      cover: bookCat,
-      id: 6,
-      stars: 2,
-      name: 'Грокаем алгоритмы',
-      author: 'Адитья Бхаргава',
-      year: 2019,
-      state: true,
-      date: '',
-    },
-    {
-      cover: bookCat,
-      id: 7,
-      stars: 2,
-      name: 'Грокаем алгоритмы',
-      author: 'Адитья Бхаргава',
-      year: 2019,
-      state: true,
-      date: '',
-    },
-    {
-      cover: bookCat,
-      id: 8,
-      stars: 2,
-      name: 'Грокаем алгоритмы',
-      author: 'Адитья Бхаргава',
-      year: 2019,
-      state: true,
-      date: '',
-    },
-    {
-      cover: algorithms,
-      id: 9,
-      stars: 2,
-      name: 'Программирование на Java',
-      author: 'Адитья Бхаргава',
-      year: 2019,
-      state: false,
-      date: '',
-    },
-    {
-      cover: algorithms,
-      id: 10,
-      stars: 5,
-      name: 'Программирование на Java',
-      author: 'Адитья Бхаргава',
-      year: 2019,
-      state: false,
-      date: '',
-    },
-  ],
-};
+export enum StatusRequestEnum {
+    Pending = "pending",
+    Success = "resolved",
+    Error = "rejected",
+}
+
+const createAppAsyncThunk = createAsyncThunk.withTypes<{
+    state: AppStateType
+    dispatch: AppDispatch
+    rejectValue: string
+    extra?: { s: string; n: number }
+}>()
+export const getBooks = createAppAsyncThunk(
+    "api/books",
+    async (_, { rejectWithValue }) => {
+
+        try {
+            const response = await axios.get("https://strapi.cleverland.by/api/books");
+            return response.data as Book[];
+
+        } catch (error) {
+            const err = error as AxiosError;
+            return rejectWithValue(err.message);
+        }
+    }
+);
+
 // eslint-disable-next-line import/no-default-export
-export default createReducer(initialState, (builder) => {});
+const booksSlice = createSlice({
+        name: "books",
+        initialState: {
+            books: [],
+            status: null,
+            error: null
+        } as InitialStateType,
+        reducers: {},
+        extraReducers: (builder) => {
+            builder.addCase(getBooks.pending, (state) => {
+                state.status = StatusRequestEnum.Pending;
+                state.error = null;
+            })
+                .addCase(getBooks.fulfilled, (state, action) => {
+                    state.status = StatusRequestEnum.Success;
+                    state.books = action.payload;
+                    state.error = null;
+                })
+            .addCase(getBooks.rejected, (state, action) => {
+                state.status = StatusRequestEnum.Error;
+                state.error = action.payload as string
 
-type InitialState = {
-  books: Book[];
+                });
+        }
+
+    }
+);
+export default booksSlice.reducer;
+
+type InitialStateType = {
+    books: Book[];
+    status: StatusRequestEnum | null,
+    error: string | null
 };
 
 type Book = {
-  cover: string;
-  id: number;
-  stars: number;
-  name: string;
-  author: string;
-  year: number;
-  state: boolean;
-  date: string;
+    issueYear: string | null;
+    rating: number | null;
+    title: string;
+    authors: string[] | null;
+    image: { url: string | null; };
+    categories: string[] | null;
+    id: number;
+    booking: BookingType,
+    delivery: DeliveryType,
+    histories: Array<{ id: number | null, userId: number | null }>
+
 };
+
+export type BookingType = {
+    id: number,
+    order: boolean,
+    dateOrder: string | null,
+    customerId: number | null,
+    customerFirstName: string | null,
+    customerLastName: string | null,
+
+}
+
+ type DeliveryType = {
+    id: number,
+    handed: boolean,
+    dateHandedFrom: string | null,
+    dateHandedTo: string | null,
+    recipientId: number | null,
+    recipientFirstName: string | null,
+    recipientLastName: string | null,
+}
+
+type ErrorType = {
+    data: null,
+    error: {
+        status: number,
+        name: string,
+        message: string,
+        details: {}
+    }
+}
