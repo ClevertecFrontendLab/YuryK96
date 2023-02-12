@@ -1,16 +1,14 @@
-import  s from  './pending.module.scss'
-import spinner from  '../../assets/images/spinner/spinner.svg'
+import s from "./pending.module.scss";
+import spinner from "../../assets/images/spinner/spinner.svg";
 
 export const Pending = () =>
-
-
-   (
-        <div className={s.pending} data-test-id='loader'>
+    (
+        <div className={s.pending} data-test-id="loader">
 
             <div className={s.spinner}>
-              <img src={spinner} alt='spinner' />
+                <img src={spinner} alt="spinner" />
             </div>
 
         </div>
-    )
+    );
 

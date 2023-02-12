@@ -1,20 +1,27 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 import { Footer } from '../footer';
 import { Header } from '../header';
-
-import s from './layout.module.scss';
 import { Pending } from "../../common/pending";
 import { Error } from "../../common/error";
 
-import { AppStateType } from "../../redux-toolkit/store";
-import { StatusRequestEnum } from "../../redux-toolkit/books-reducer";
+import { AppDispatch, AppStateType } from "../../redux-toolkit/store";
+import { getBooks, getCategories, StatusRequestEnum } from "../../redux-toolkit/books-reducer";
+import { getBooksStatus } from "../../redux-toolkit/books-selectos";
+
+import s from './layout.module.scss';
+
 
 export const Layout = () => {
-    const status = useSelector((state:AppStateType) => state.booksBranch.status)
+    const status = useSelector(getBooksStatus)
+    const dispatch = useDispatch<AppDispatch>()
 
-
+    useEffect( ()=>{
+        dispatch(getBooks())
+        dispatch(getCategories())
+    },[dispatch] )
 
   return  <section className={s.Layout}>
 

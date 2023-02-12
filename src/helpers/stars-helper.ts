@@ -1,7 +1,7 @@
 import emptyStar from '../assets/images/stars/emptyStar.svg';
 import wholeStar from '../assets/images/stars/star.svg';
 
-export const countStars = (stars: number | null) => {
+export const countStars = (stars: number | null | undefined) => {
   let starsArray: Star[] = [];
   switch (stars) {
     case 0:

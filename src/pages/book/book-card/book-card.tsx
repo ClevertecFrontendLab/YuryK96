@@ -20,7 +20,7 @@ export const BookCard: React.FC<Book> = ({ isSortingList }) => {
 
         return (
           <div className={s.bookWrapper} key={book.id}>
-            <NavLink to={`/books/all/&id=${book.id}`}>
+            <NavLink to={`/books/all/${book.id}`}>
               <div data-test-id='card' key={book.id} className={s.BookItem}>
                 <div className={s.cover}>
                   <img alt='cover' src={book.image ? `https://strapi.cleverland.by${book.image.url}` : catBook} />
