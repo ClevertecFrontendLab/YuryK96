@@ -1,6 +1,10 @@
 @import 'src/variables';
 
 nav {
+
+    @media (min-width: 1000px) {
+        min-width: 200px;
+    }
   .showcase {
     border-bottom: 1px solid rgb(0, 0, 0);
     width: 90%;
@@ -61,13 +65,13 @@ nav {
   .booksAll {
     display: inline-block;
     @include text(18px, 700, 28px, #363636);
-    padding-left: 14px;
+
     letter-spacing: 0.1px;
     margin-top: $paddingMedium;
     cursor: pointer;
     @media (max-width: 450px) {
       @include text(16px, 400, 24px, #363636);
-      padding-left: 16px;
+
     }
   }
   .activeBooksAll {
@@ -81,7 +85,7 @@ nav {
     max-height: 0;
 
     ul {
-      padding-left: $paddingMedium;
+      padding-left: $paddingSmall;
       padding-bottom: 10px;
 
       li {

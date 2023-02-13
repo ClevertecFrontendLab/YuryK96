@@ -32,7 +32,6 @@ import { Error } from "../../common/error";
 export const BookPage: React.FC = () => {
     const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
     const dispatch = useDispatch<AppDispatch>();
-    const status = useSelector(getBookStatus);
     const { pathname } = useLocation();
     const { width1000 } = useWindowSize();
     const { userId } = useParams();
@@ -45,11 +44,11 @@ export const BookPage: React.FC = () => {
     const stars = countStars(book?.rating);
     return (
         <section className={s.bookPage}>
-            {status === StatusRequestEnum.Error && <Error/> }
+            {book.status === StatusRequestEnum.Error && <Error/> }
             <BreadCrumbs />
 
 
-            <div className={s.content}>
+            {book.status === StatusRequestEnum.Success &&  <div className={s.content}>
                 <div className={s.cover}>
                     {!book?.images ? (
                         <div className={s.nonCover}>
@@ -122,8 +121,8 @@ export const BookPage: React.FC = () => {
                             {book?.authors} {book?.issueYear}
                         </div>
                         <div className={s.button}>
-                            {status === StatusRequestEnum.Success &&
-                                <Button isBookPage={true} booking={book.booking} />}
+
+                                <Button isBookPage={true} booking={book.booking} />
                         </div>
                     </div>
                     <div className={s.about}>
@@ -201,10 +200,10 @@ export const BookPage: React.FC = () => {
 
                 <BookComments comments={book?.comments} />
 
-                {status === StatusRequestEnum.Success &&
+
                     <Button id="button-rating" isBookEstimate={true} booking={null}
-                            bookPageText="ОЦЕНИТЬ КНИГУ" />}
-            </div>
+                            bookPageText="ОЦЕНИТЬ КНИГУ" />
+            </div> }
         </section>
     );
 };

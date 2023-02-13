@@ -67,9 +67,9 @@ const booksSlice = createSlice({
             books: [],
             book: {
                 status: null,
-                error:null,
+                error: null
             },
-            categories: [],
+            categories: null,
             status: null,
             error: null
         } as InitialStateType,
@@ -87,14 +87,16 @@ const booksSlice = createSlice({
                     state.error = null;
                 })
                 .addCase(getBook.fulfilled, (state, action) => {
-                    state.book = {...state.book, ...action.payload };
+                    state.book = { ...state.book, ...action.payload };
                     state.book.status = StatusRequestEnum.Success;
                     state.status = StatusRequestEnum.Success;
                     state.error = null;
                 })
                 .addCase(getBook.rejected, (state, action) => {
+
                     state.book.status = StatusRequestEnum.Error;
                     state.book.error = action.payload as string;
+                    state.status = null;
                 })
                 .addCase(getCategories.rejected, (state, action) => {
                     state.status = StatusRequestEnum.Error;
@@ -104,10 +106,18 @@ const booksSlice = createSlice({
                     state.status = StatusRequestEnum.Error;
                     state.error = action.payload as string;
                 })
-                .addMatcher(isPending, (state, action) => {
+                .addCase(getBooks.pending, (state, action) => {
                     state.status = StatusRequestEnum.Pending;
                     state.error = null;
-                });
+                }).addCase(getCategories.pending, (state, action) =>{
+                state.status = StatusRequestEnum.Pending;
+                state.error = null;
+            }).addCase(getBook.pending, (state, action) => {
+                state.book.status = StatusRequestEnum.Pending;
+                state.status = StatusRequestEnum.Pending;
+                state.error = null;
+            });
+
         }
 
     }
@@ -121,8 +131,8 @@ export default booksSlice.reducer;
 
 type InitialStateType = {
     books: Books[];
-    book: Book ;
-    categories: CategoryType[];
+    book: Book;
+    categories: CategoryType[] | null;
     status: StatusRequestEnum | null;
     error: string | null;
 };
@@ -139,7 +149,7 @@ type Books = {
     delivery: DeliveryType,
     histories: Array<{ id: number | null, userId: number | null }>
 
-} ;
+};
 
 export type Book = {
     status: StatusRequestEnum | null
@@ -159,14 +169,14 @@ export type Book = {
     authors?: string[] | null;
     images?: Array<{ url: string | null; }>;
     categories?: string[],
-    comments?: CommentType[] ,
+    comments?: CommentType[],
     booking?: BookingType,
     delivery?: DeliveryType,
     histories?: Array<{ id: number | null, userId: number | null }>
 
 };
 export type CommentType = {
-    id: number ,
+    id: number,
     rating: number,
     text: string | null,
     createdAt: string,

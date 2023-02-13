@@ -13,7 +13,6 @@ export const Navigation: React.FC<NavigationType> = ({ toggleMenu, idShowcase, i
   const handleSetIsOpen: () => void = () => {
     setIsOpen(!isOpen);
   };
-
   return (
     <nav>
       <h1
@@ -26,7 +25,7 @@ export const Navigation: React.FC<NavigationType> = ({ toggleMenu, idShowcase, i
         <i className={`${s.arrow} ${isOpen && s.arrowOpen} ${pathname === '/books/all' && s.arrowColor}  `} />
       </h1>
 
-      <div className={`${s.wrapperList} ${isOpen && s.wrapperListOpen}  `}>
+        {categories &&  <div className={`${s.wrapperList} ${isOpen && s.wrapperListOpen}  `}>
         {' '}
         <NavLink data-test-id={idBooks} onClick={toggleMenu} to='/books/all'>
           <div className={` ${s.booksAll} ${pathname === '/books/all' ? s.activeBooksAll : ''}`}>Все книги</div>{' '}
@@ -44,7 +43,7 @@ export const Navigation: React.FC<NavigationType> = ({ toggleMenu, idShowcase, i
             </li>
           ))}
         </ul>
-      </div>
+      </div>}
       <NavLink
         onClick={() => {
           setIsOpen(false);

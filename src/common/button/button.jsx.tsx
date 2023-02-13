@@ -21,7 +21,7 @@ export const Button: React.FC<ButtonType> = ({
                 : !bookPageText && bookPageText !== ''
                     ?  <p> ЗАНЯТО ДО {booking?.dateOrder} </p>
                     : booking?.order && <p style={ {color: '#a7a7a7'} }>ЗАБРОНИРОВАНО </p>}
-            {!!bookPageText && <p>bookPageText </p>}
+            {!!bookPageText && <p>{bookPageText} </p>}
 
         </div>
     )

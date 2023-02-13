@@ -16,12 +16,6 @@ import s from './layout.module.scss';
 
 export const Layout = () => {
     const status = useSelector(getBooksStatus)
-    const dispatch = useDispatch<AppDispatch>()
-
-    useEffect( ()=>{
-        dispatch(getBooks())
-        dispatch(getCategories())
-    },[dispatch] )
 
   return  <section className={s.Layout}>
 
