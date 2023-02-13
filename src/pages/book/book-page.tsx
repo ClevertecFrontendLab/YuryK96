@@ -123,7 +123,7 @@ export const BookPage: React.FC = () => {
                         </div>
                         <div className={s.button}>
                             {status === StatusRequestEnum.Success &&
-                                <Button isBookPage={true} booking={null} />}
+                                <Button isBookPage={true} booking={book.booking} />}
                         </div>
                     </div>
                     <div className={s.about}>

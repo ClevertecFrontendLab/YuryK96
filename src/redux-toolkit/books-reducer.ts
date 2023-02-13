@@ -61,7 +61,6 @@ export const getCategories = createAppAsyncThunk(
     }
 );
 
-// eslint-disable-next-line import/no-default-export
 const booksSlice = createSlice({
         name: "books",
         initialState: {
@@ -113,10 +112,6 @@ const booksSlice = createSlice({
 
     }
 );
-
-function isError(action: AnyAction) {
-    return action.type.endsWith("rejected");
-}
 
 function isPending(action: AnyAction) {
     return action.type.endsWith("pending");

@@ -71,11 +71,11 @@
         padding: $paddingSmall $paddingMedium 0;
         @include text(12px, 400, 18px, #727272);
 
-          @media (max-width: 370px) {
+          @media (min-width: 768px) {
               overflow: hidden;
               text-overflow: ellipsis;
               display: -webkit-box;
-              -webkit-line-clamp: 1;
+              -webkit-line-clamp:1;
               -webkit-box-orient: vertical;
           }
       }
@@ -83,10 +83,22 @@
   }
 }
 .bookSquare {
+
+
   @media (min-width: 1000px) {
     display: grid;
     grid-template-columns: repeat(auto-fit, min(190px));
   }
+
+    .author {
+        @media (max-width: 370px) {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+    }
 }
 .bookList {
   flex-direction: column;
