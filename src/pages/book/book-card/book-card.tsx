@@ -6,7 +6,7 @@ import emptyStar from '../../../assets/images/stars/emptyStar.svg';
 import wholeStar from '../../../assets/images/stars/star.svg';
 import catBook from '../../../assets/images/books/bookCat.svg';
 import { Button } from "../../../common/button";
-import { getBooks } from '../../../redux-toolkit/books-selectos';
+import { getBooks } from '../../../redux-toolkit/books/books-selectos';
 
 import s from './book-card.module.scss';
 

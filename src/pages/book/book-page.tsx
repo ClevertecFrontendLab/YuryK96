@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation, Thumbs, Pagination, Scrollbar } from "swiper";
-
+import { StatusRequestEnum } from "../../redux-toolkit/books/books-type";
 import emptyStar from "../../assets/images/stars/emptyStar.svg";
 import wholeStar from "../../assets/images/stars/star.svg";
 import { Button } from "../../common/button";
-
+import { getBook } from "../../redux-toolkit/books/books-thunks";
 
 import { BreadCrumbs } from "./bread-crumbs";
 
@@ -21,13 +21,14 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "./swiper-style.scss";
 import { BookComments } from "./book-comments";
-import { AppDispatch, AppStateType } from "../../redux-toolkit/store";
+import { AppDispatch, AppStateType } from "../../redux-toolkit/books/store";
 import bookCat from "../../assets/images/books/bookCat.svg";
 import { useWindowSize } from "../../hooks/window-size-hook";
 import { countStars } from "../../helpers/stars-helper";
-import { getBook, StatusRequestEnum } from "../../redux-toolkit/books-reducer";
-import { getBookStatus, getChosenBook } from "../../redux-toolkit/books-selectos";
+import { getBookStatus, getChosenBook } from "../../redux-toolkit/books/books-selectos";
 import { Error } from "../../common/error";
+
+
 
 export const BookPage: React.FC = () => {
     const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
@@ -35,20 +36,24 @@ export const BookPage: React.FC = () => {
     const { pathname } = useLocation();
     const { width1000 } = useWindowSize();
     const { userId } = useParams();
+
+
     useEffect(() => {
-
-        dispatch(getBook(userId));
-
+        if (userId) {
+            dispatch(getBook(userId));
+        }
     }, [pathname, dispatch]);
     const book = useSelector(getChosenBook);
-    const stars = countStars(book?.rating);
+    const stars = countStars(book.rating);
     return (
         <section className={s.bookPage}>
-            {book.status === StatusRequestEnum.Error && <Error/> }
+            {book.status === StatusRequestEnum.Error && <div style={{
+                position: "absolute", width:'100%', marginTop: "-100px"
+            }}><Error /></div>}
             <BreadCrumbs />
 
 
-            {book.status === StatusRequestEnum.Success &&  <div className={s.content}>
+            {book.status === StatusRequestEnum.Success && <div className={s.content}>
                 <div className={s.cover}>
                     {!book?.images ? (
                         <div className={s.nonCover}>
@@ -77,7 +82,7 @@ export const BookPage: React.FC = () => {
                                 navigation={true}
                                 thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
                                 modules={[Navigation, Thumbs, Pagination]}
-                                pagination={!width1000}
+                                pagination={!width1000 && { clickable: true }}
                                 className="mySwiper2"
                             >
                                 {book.images.map((item, index) => (
@@ -122,7 +127,7 @@ export const BookPage: React.FC = () => {
                         </div>
                         <div className={s.button}>
 
-                                <Button isBookPage={true} booking={book.booking} />
+                            <Button isBookPage={true} booking={book.booking} />
                         </div>
                     </div>
                     <div className={s.about}>
@@ -146,7 +151,7 @@ export const BookPage: React.FC = () => {
                             ))}{" "}
                         </div>
                         <div
-                            className={s.ratingNumber}>{book?.rating === 0 ? "ещё нет оценок" : book?.rating}</div>
+                            className={s.ratingNumber}>{book?.rating === 0 || !book.rating ? "ещё нет оценок" : Math.round(book.rating)}</div>
                     </div>
                 </div>
 
@@ -201,9 +206,9 @@ export const BookPage: React.FC = () => {
                 <BookComments comments={book?.comments} />
 
 
-                    <Button id="button-rating" isBookEstimate={true} booking={null}
-                            bookPageText="ОЦЕНИТЬ КНИГУ" />
-            </div> }
+                <Button id="button-rating" isBookEstimate={true} booking={null}
+                        bookPageText="ОЦЕНИТЬ КНИГУ" />
+            </div>}
         </section>
     );
 };

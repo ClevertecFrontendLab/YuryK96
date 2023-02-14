@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import { getCategories } from "../../redux-toolkit/books-selectos";
+import { getCategories } from "../../redux-toolkit/books/books-selectos";
 
 import s from './navigation.module.scss';
 
@@ -28,7 +28,7 @@ export const Navigation: React.FC<NavigationType> = ({ toggleMenu, idShowcase, i
         {categories &&  <div className={`${s.wrapperList} ${isOpen && s.wrapperListOpen}  `}>
         {' '}
         <NavLink data-test-id={idBooks} onClick={toggleMenu} to='/books/all'>
-          <div className={` ${s.booksAll} ${pathname === '/books/all' ? s.activeBooksAll : ''}`}>Все книги</div>{' '}
+          <div className={` ${s.booksAll} ${pathname === '/terms' ? '' : pathname === '/contract' ? '' : pathname === '/Profile' ? '' : pathname === '/exit' ? '' :   s.activeBooksAll}`}>Все книги</div>{' '}
         </NavLink>
         <ul>
           {categories.map((category) => (

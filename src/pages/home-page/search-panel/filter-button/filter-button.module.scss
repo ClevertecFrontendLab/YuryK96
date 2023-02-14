@@ -2,21 +2,22 @@
 
 .filterButton {
   transition: 1s;
-  margin-left: 14%;
+  margin-left: 370px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
 
-  @media (min-width: 768px) {
-    margin-left: 45%;
-  }
-  @media (min-width: 1000px) {
-    margin-left: 30%;
-  }
-  @media (min-width: 1200px) {
-    margin-left: 35%;
-  }
+
+
+    @media (max-width: 1000px) {
+        margin-left: 370px;
+    }
+    @media (max-width: 768px) {
+        margin-left: 55px;
+    }
+
+
   .dropdown {
     margin: 0 auto;
     user-select: none;
@@ -52,9 +53,12 @@
     }
     .dropdownContent {
       border: 1px solid gray;
+        background: white;
+        font-size: 16px;
       margin-top: var(--SearchPanelButtonHeight);
       .dropdownItem {
         transition: all 0.2s;
+          padding: 5px;
 
         &:hover {
           background: #bfc4c9;

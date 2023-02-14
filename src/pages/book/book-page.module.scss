@@ -21,8 +21,10 @@
 
       .nonCover,
       .oneCover {
-        img {
           width: 100%;
+          height: 100%;
+        img {
+          width: inherit;
           height: 100%;
         }
       }
@@ -33,6 +35,9 @@
         float: left;
         margin-right: $paddingMedium;
       }
+        @media (min-width: 800px) {
+            margin-bottom: $paddingMedium;
+        }
       @media (min-width: 900px) {
         width: 245px;
         height: 352px;
@@ -109,7 +114,7 @@
         border-bottom: 1px solid #ebebeb;
 
         @media (min-width: 600px) {
-          width: 30%;
+          width: 27%;
         }
 
         @include text(18px, 700, 28px, #363636);
@@ -147,6 +152,7 @@
       display: flex;
       flex-direction: column;
       width: 100%;
+        margin-top: 52px;
       &Title {
         padding-bottom: $paddingSmall;
         margin-bottom: $paddingSmall;

@@ -1,17 +1,16 @@
-import { Outlet, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { Outlet } from 'react-router-dom';
+import {  useSelector } from "react-redux";
+
 
 import { Footer } from '../footer';
 import { Header } from '../header';
 import { Pending } from "../../common/pending";
 import { Error } from "../../common/error";
 
-import { AppDispatch, AppStateType } from "../../redux-toolkit/store";
-import { getBooks, getCategories, StatusRequestEnum } from "../../redux-toolkit/books-reducer";
-import { getBooksStatus } from "../../redux-toolkit/books-selectos";
+import { getBooksStatus } from "../../redux-toolkit/books/books-selectos";
 
 import s from './layout.module.scss';
+import { StatusRequestEnum } from "../../redux-toolkit/books/books-type";
 
 
 export const Layout = () => {

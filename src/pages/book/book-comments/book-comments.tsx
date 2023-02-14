@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import emptyStar from '../../../assets/images/stars/emptyStar.svg';
 import commentAvatar from '../../../assets/images/avatar/comment.png';
-
+import { CommentType } from "../../../redux-toolkit/books/books-type";
 
 import s from './book-commets.module.scss';
 import { countStars } from '../../../helpers/stars-helper';
-import { CommentType } from "../../../redux-toolkit/books-reducer";
+
+
 
 type BookCommentsType = {
   comments: CommentType[] | undefined;

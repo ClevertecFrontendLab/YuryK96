@@ -1,12 +1,12 @@
 import { useDispatch } from "react-redux";
 import { Outlet } from 'react-router-dom';
 import { useEffect } from "react";
-import { getBooks, getCategories } from "../../../redux-toolkit/books-reducer";
-
+import { getBooks, getCategories } from "../../../redux-toolkit/books/books-thunks";
 
 import { Navigation } from '../../navigation';
-import { AppDispatch } from "../../../redux-toolkit/store";
+import { AppDispatch } from "../../../redux-toolkit/books/store";
 import s from './layout-home-page.module.scss';
+
 
 
 export const LayoutHomePage = () => {

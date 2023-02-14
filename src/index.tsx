@@ -9,7 +9,7 @@ import { HomePage } from './pages/home-page';
 import { Layout } from './pages/layout';
 import { LayoutHomePage } from './pages/layout/layout-home-page';
 import { Terms } from './pages/terms';
-import { store } from './redux-toolkit/store';
+import { store } from './redux-toolkit/books/store';
 
 import './fonts.css';
 import './index.css';

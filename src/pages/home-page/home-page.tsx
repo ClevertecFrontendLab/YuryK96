@@ -1,12 +1,13 @@
 import React, {  useState } from "react";
 import { useSelector } from "react-redux";
-import { getBooksStatus } from "../../redux-toolkit/books-selectos";
-import { StatusRequestEnum } from "../../redux-toolkit/books-reducer";
+import { getBooksStatus } from "../../redux-toolkit/books/books-selectos";
+import { StatusRequestEnum } from "../../redux-toolkit/books/books-type";
 import { BookCard } from '../book/book-card';
 
 import { SearchPanel } from './search-panel';
 
 import s from './homePage.module.scss';
+
 
 
 export const HomePage = () => {

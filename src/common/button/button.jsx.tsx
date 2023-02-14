@@ -1,7 +1,8 @@
 import React from 'react';
 
 import s from './button.module.scss';
-import { BookingType } from "../../redux-toolkit/books-reducer";
+import { BookingType } from "../../redux-toolkit/books/books-type";
+
 
 export const Button: React.FC<ButtonType> = ({
    booking,
