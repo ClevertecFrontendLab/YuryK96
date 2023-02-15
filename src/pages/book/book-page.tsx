@@ -44,7 +44,7 @@ export const BookPage: React.FC = () => {
         }
     }, [pathname, dispatch]);
     const book = useSelector(getChosenBook);
-    console.log(book)
+
     const stars = countStars(book.rating);
     return (
         <section className={s.bookPage}>

@@ -16,6 +16,7 @@ export const BookComments: React.FC<BookCommentsType> = ({ comments }) => {
   const toggleListComments = () => {
     setIsCommentsOpen(!isCommentsOpen);
   };
+
   return (
     <div className={s.comments}>
       <div data-test-id='button-hide-reviews' className={s.comments__title}>
@@ -36,7 +37,7 @@ export const BookComments: React.FC<BookCommentsType> = ({ comments }) => {
                       <img alt='avatar' src={!comment.user.avatarUrl ? commentAvatar : `https://strapi.cleverland.by${comment.user.avatarUrl}`} />
                     </div>
                     <div className={s.comments__name}>{comment.user.firstName}{' '}{comment.user.lastName}</div>
-                    <div className={s.comments__date}>{comment.createdAt}</div>
+                    <div className={s.comments__date}>{comment.createdAt.split('T')[0] }</div>
                   </div>
                   <div className={s.comments__stars}>
                     {stars.map((star) => (

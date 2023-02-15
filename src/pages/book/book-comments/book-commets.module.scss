@@ -70,11 +70,18 @@
     }
   }
   &__avatar {
+      width: 32px;
+      height: 32px;
+
     float: left;
-    padding-right: $paddingMedium;
+    margin-right: $paddingMedium;
+      img {
+          height: 100%;
+
+      }
     @media (min-width: 600px) {
       float: none;
-      padding-right: $paddingBig;
+        margin-right: $paddingBig;
     }
   }
   &__name {

@@ -16,7 +16,6 @@ export const Navigation: React.FC<NavigationType> = ({ toggleMenu, idShowcase, i
   const categories = useSelector(getCategories);
   const navigate = useNavigate()
   const { pathname } = useLocation();
-    console.log(status)
   useEffect( ()=>{
 
       if (pathname !== '/terms' &&  pathname !== '/contract' && pathname !== '/Profile' && pathname !== '/exit') {
