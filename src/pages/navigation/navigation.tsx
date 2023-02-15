@@ -1,17 +1,41 @@
-import React, { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import {  NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getCategories } from "../../redux-toolkit/books/books-selectos";
+import { getBooksStatus, getCategories } from "../../redux-toolkit/books/books-selectos";
 
 import s from './navigation.module.scss';
+import { useWindowSize } from "../../hooks/window-size-hook";
+import { StatusRequestEnum } from "../../redux-toolkit/books/books-type";
 
 
 export const Navigation: React.FC<NavigationType> = ({ toggleMenu, idShowcase, idBooks, idContract, idTerms }) => {
   const [isOpen, setIsOpen] = useState(true);
+  const {width1000}= useWindowSize()
+    const status = useSelector(getBooksStatus)
+  const [prevPath, setPrevPath] = useState<string | null>(null);
   const categories = useSelector(getCategories);
+  const navigate = useNavigate()
   const { pathname } = useLocation();
+    console.log(status)
+  useEffect( ()=>{
+
+      if (pathname !== '/terms' &&  pathname !== '/contract' && pathname !== '/Profile' && pathname !== '/exit') {
+
+          setPrevPath(pathname)
+      }
+
+  }, [pathname] )
   const handleSetIsOpen: () => void = () => {
     setIsOpen(!isOpen);
+
+    if (!isOpen) {
+        if (pathname === '/terms'  ||  pathname === '/contract'  || pathname === '/Profile'  || pathname === '/exit'   ) {
+
+
+            navigate(`${!prevPath ? '/books/all' : prevPath}`)
+        }
+
+    }
   };
   return (
     <nav>
@@ -25,10 +49,10 @@ export const Navigation: React.FC<NavigationType> = ({ toggleMenu, idShowcase, i
         <i className={`${s.arrow} ${isOpen && s.arrowOpen} ${pathname === '/books/all' && s.arrowColor}  `} />
       </h1>
 
-        {categories &&  <div className={`${s.wrapperList} ${isOpen && s.wrapperListOpen}  `}>
+        {categories && status === StatusRequestEnum.Success &&  <div className={`${s.wrapperList} ${isOpen && s.wrapperListOpen}  `}>
         {' '}
         <NavLink data-test-id={idBooks} onClick={toggleMenu} to='/books/all'>
-          <div className={` ${s.booksAll} ${pathname === '/terms' ? '' : pathname === '/contract' ? '' : pathname === '/Profile' ? '' : pathname === '/exit' ? '' :   s.activeBooksAll}`}>Все книги</div>{' '}
+          <div className={` ${s.booksAll} ${pathname === '/books/all' ?  s.activeBooksAll : ''}`}>Все книги</div>{' '}
         </NavLink>
         <ul>
           {categories.map((category) => (
@@ -71,6 +95,24 @@ export const Navigation: React.FC<NavigationType> = ({ toggleMenu, idShowcase, i
           Договор оферты
         </h1>
       </NavLink>
+        {!width1000 && <> <hr />
+            <NavLink  onClick={() => {
+                setIsOpen(false);
+                if (toggleMenu) {
+                    toggleMenu();
+                }
+            }} to='/Profile'>
+            <div className={`${s.profile} ${pathname === '/Profile' && s.profileActive}`}>Профиль</div>
+            </NavLink>
+            <NavLink  onClick={() => {
+                setIsOpen(false);
+                if (toggleMenu) {
+                    toggleMenu();
+                }
+            }} to='/exit'>
+            <div className={`${s.exit} ${pathname === '/exit' && s.exitActive}`}>Выход</div>{' '}
+            </NavLink> </>  }
+
     </nav>
   );
 };

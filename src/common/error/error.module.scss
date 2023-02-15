@@ -3,14 +3,14 @@
 .error {
     position: absolute;
     width: 90%;
-    margin-top: $paddingEnormous;
+    margin-top: 55px;
     z-index: 999;
     &__container {
 
         background: #FEEBEA;
         border: 1px solid rgba(244, 44, 79, 1);
         border-radius: 5px;
-        padding: $paddingBig $paddingLarge;
+        padding: 20px $paddingLarge;
 
         @media (max-width: 800px) {
             padding: $paddingMedium $paddingBig;
@@ -32,6 +32,8 @@
 
     }
     &__text {
+        display: flex;
+        align-items: center;
         padding-left: $paddingBig;
         @include text(16px,600,24px,#363636);
 
@@ -46,9 +48,11 @@
         }
     }
     &__signIcon {
+        display: flex;
+        align-items: center;
         width: 32px;
         height: 32px;
-        margin-top: -5px;
+
 
         @media (max-width: 800px) {
             width: 20px;

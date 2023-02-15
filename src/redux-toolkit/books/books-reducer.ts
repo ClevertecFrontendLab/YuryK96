@@ -14,6 +14,7 @@ const booksSlice = createSlice({
             },
             categories: null,
             status: null,
+            categoriesStatus: null,
             error: null
         } as InitialStateType,
         reducers: {},
@@ -25,7 +26,7 @@ const booksSlice = createSlice({
                     state.error = null;
                 })
                 .addCase(getCategories.fulfilled, (state, action) => {
-                    state.status = StatusRequestEnum.Success;
+                    state.categoriesStatus = StatusRequestEnum.Success;
                     state.categories = action.payload;
                     state.error = null;
                 })
@@ -42,7 +43,7 @@ const booksSlice = createSlice({
                     state.status = null;
                 })
                 .addCase(getCategories.rejected, (state, action) => {
-                    state.status = StatusRequestEnum.Error;
+                    state.categoriesStatus = StatusRequestEnum.Error;
                     state.error = action.payload as string;
                 })
                 .addCase(getBooks.rejected, (state, action) => {

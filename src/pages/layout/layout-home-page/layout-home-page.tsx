@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from 'react-router-dom';
 import { useEffect } from "react";
 import { getBooks, getCategories } from "../../../redux-toolkit/books/books-thunks";
@@ -9,8 +9,8 @@ import s from './layout-home-page.module.scss';
 
 
 
-export const LayoutHomePage = () => {
 
+export const LayoutHomePage = () => {
     const dispatch = useDispatch<AppDispatch>()
 
     useEffect( ()=>{
@@ -19,7 +19,7 @@ export const LayoutHomePage = () => {
     },[dispatch] )
 
     return  <section className={s.LayoutHomePage}>
-        <div className={s.wrapperNavigation}>
+    <div className={s.wrapperNavigation}>
             <Navigation
                 idContract='navigation-contract'
                 idTerms='navigation-terms'

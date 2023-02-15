@@ -10,6 +10,7 @@ export type InitialStateType = {
     books: Books[] | [];
     book: Book;
     categories: CategoryType[] | null;
+    categoriesStatus : StatusRequestEnum | null,
     status: StatusRequestEnum | null;
     error: string | null;
 };

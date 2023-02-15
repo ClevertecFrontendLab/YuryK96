@@ -43,13 +43,6 @@ export const BurgerButton: React.FC<BurgerButtonType> = ({ toggleMenu, isOpen })
             toggleMenu={toggleMenu}
           />
 
-          <hr />
-          <NavLink onClick={toggleMenu} to='/Profile'>
-            <div className={`${s.profile} ${pathname === '/Profile' && s.profileActive}`}>Профиль</div>
-          </NavLink>
-          <NavLink onClick={toggleMenu} to='/exit'>
-            <div className={`${s.exit} ${pathname === '/exit' && s.exitActive}`}>Выход</div>{' '}
-          </NavLink>
         </div>
       </div>
     </div>

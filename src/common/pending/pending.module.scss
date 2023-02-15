@@ -9,10 +9,7 @@
     backdrop-filter: blur(5px);
 
 
-
-
-
-    .spinner{
+    .spinner {
         height: 100vh;
         display: flex;
         justify-content: center;
@@ -20,8 +17,21 @@
 
         img {
             z-index: 999;
-            width: 150px;
-            height: 150px;
+
+
+            @media (min-width: 320px){
+                width: 22px;
+                height: 22px;
+            }
+            @media (min-width: 768px){
+                width: 44px;
+                height: 44px;
+            }
+            @media (min-width: 1000px){
+                width: 69px;
+                height: 69px;
+            }
+
 
             @media (max-width: 1000px) {
                 width: 100px;

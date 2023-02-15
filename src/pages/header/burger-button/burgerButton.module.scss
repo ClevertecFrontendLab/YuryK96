@@ -108,39 +108,6 @@
   }
 
   .menuButtonWrapper {
-    hr {
-      margin-top: 52px;
-      margin-bottom: 32px;
-      margin-left: -10%;
-    }
-    .profile {
-      @include text(18px, 700, 28px, #363636);
-      width: 90%;
-      padding-bottom: $paddingSmall;
-      @media (min-width: 450px) and (max-width: 1000px) {
-        width: 255px;
-      }
-    }
-    .exit {
-      padding-bottom: $paddingSmall;
-      width: 90%;
-      padding-top: 42px;
-      margin-bottom: 52px;
-      @include text(18px, 700, 28px, #363636);
-      @media (min-width: 450px) and (max-width: 1000px) {
-        width: 255px;
-      }
-    }
 
-    .profile:hover,
-    .exit:hover {
-      border-bottom: 1px solid rgba(249, 212, 35, 1);
-      color: rgba(249, 212, 35, 1);
-    }
-    .profileActive,
-    .exitActive {
-      border-bottom: 1px solid rgba(248, 54, 0, 1);
-      color: rgba(248, 54, 0, 1);
-    }
   }
 }

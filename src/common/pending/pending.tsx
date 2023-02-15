@@ -6,7 +6,7 @@ export const Pending = () =>
         <div className={s.pending} data-test-id="loader">
 
             <div className={s.spinner}>
-                <img src={spinner} alt="spinner" />
+                <img loading='eager' src={spinner} alt="spinner" />
             </div>
 
         </div>

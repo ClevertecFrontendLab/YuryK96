@@ -44,13 +44,14 @@ export const BookPage: React.FC = () => {
         }
     }, [pathname, dispatch]);
     const book = useSelector(getChosenBook);
+    console.log(book)
     const stars = countStars(book.rating);
     return (
         <section className={s.bookPage}>
             {book.status === StatusRequestEnum.Error && <div style={{
-                position: "absolute", width:'100%', marginTop: "-100px"
+                position: "absolute", width:'100%', marginTop: "-85px"
             }}><Error /></div>}
-            <BreadCrumbs />
+            <BreadCrumbs title={book.title} categories={book.categories}  />
 
 
             {book.status === StatusRequestEnum.Success && <div className={s.content}>
@@ -63,7 +64,7 @@ export const BookPage: React.FC = () => {
                     ) : book.images.length === 1 ? (
                         <div className={s.oneCover}>
                             {" "}
-                            <img src={`https://strapi.cleverland.by${book.images[0].url}`}
+                            <img loading='lazy' src={`https://strapi.cleverland.by${book.images[0].url}`}
                                  alt="cover" />{" "}
                         </div>
                     ) : (
