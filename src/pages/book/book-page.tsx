@@ -37,19 +37,18 @@ export const BookPage: React.FC = () => {
     const { width1000 } = useWindowSize();
     const { userId } = useParams();
 
+    const book = useSelector(getChosenBook);
+    const stars = countStars(book.rating);
 
     useEffect(() => {
         if (userId) {
             dispatch(getBook(userId));
         }
     }, [pathname, dispatch]);
-    const book = useSelector(getChosenBook);
-
-    const stars = countStars(book.rating);
     return (
         <section className={s.bookPage}>
             {book.status === StatusRequestEnum.Error && <div className={s.wrapperError}><Error /></div>}
-            <BreadCrumbs title={book.title} categories={book.categories}  />
+            <BreadCrumbs title={book.title}  categoryBook={book.categories}  />
 
 
             {book.status === StatusRequestEnum.Success && <div className={s.content}>

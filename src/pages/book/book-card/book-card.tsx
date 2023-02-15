@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from "react-router-dom";
 import { countStars } from '../../../helpers/stars-helper';
 import emptyStar from '../../../assets/images/stars/emptyStar.svg';
 import wholeStar from '../../../assets/images/stars/star.svg';
@@ -12,7 +12,7 @@ import s from './book-card.module.scss';
 
 export const BookCard: React.FC<Book> = ({ isSortingList }) => {
   const books = useSelector(getBooks);
-
+  const { category } = useParams()
   return (
     <div className={`${s.book} ${isSortingList && s.bookList} ${!isSortingList && s.bookSquare}`}>
       {books.map((book) => {
@@ -20,7 +20,7 @@ export const BookCard: React.FC<Book> = ({ isSortingList }) => {
 
         return (
           <div className={s.bookWrapper} key={book.id}>
-            <NavLink to={`/books/all/${book.id}`}>
+            <NavLink to={`/books/${category}/${book.id}`}>
               <div data-test-id='card' key={book.id} className={s.BookItem}>
                 <div className={s.cover}>
                   <img alt='cover' src={book.image ? `https://strapi.cleverland.by${book.image.url}` : catBook} />
