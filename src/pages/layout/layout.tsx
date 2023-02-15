@@ -18,6 +18,7 @@ export const Layout = () => {
 
   return  <section className={s.Layout}>
 
+
       { status === StatusRequestEnum.Pending && <Pending/>}
       {status === StatusRequestEnum.Error && <Error/> }
         <Header />

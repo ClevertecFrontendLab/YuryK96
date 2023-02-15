@@ -48,9 +48,7 @@ export const BookPage: React.FC = () => {
     const stars = countStars(book.rating);
     return (
         <section className={s.bookPage}>
-            {book.status === StatusRequestEnum.Error && <div style={{
-                position: "absolute", width:'100%', marginTop: "-85px"
-            }}><Error /></div>}
+            {book.status === StatusRequestEnum.Error && <div className={s.wrapperError}><Error /></div>}
             <BreadCrumbs title={book.title} categories={book.categories}  />
 
 
