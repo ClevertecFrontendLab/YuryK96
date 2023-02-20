@@ -55,7 +55,7 @@ export const BookPage: React.FC = () => {
                 <div className={s.cover}>
                     {!book?.images ? (
                         <div className={s.nonCover}>
-                            {" "}
+                            {" "}a
                             <img src={bookCat} alt="cat book" />{" "}
                         </div>
                     ) : book.images.length === 1 ? (
