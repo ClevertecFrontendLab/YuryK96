@@ -24,7 +24,7 @@ export const BreadCrumbs = () => {
         }
     },[category, categories] )
    return <div className={s.breadCrumbs}>
-       <p><NavLink data-test-id='breadcrumbs-link' to={`/books/${category}`}> {categoryName}</NavLink> / <span data-test-id='book-name' >{bookTitle}</span></p>
+       <p><NavLink data-test-id='breadcrumbs-link' to={`/books/${category}`}>{categoryName}</NavLink> / <span data-test-id='book-name' >{bookTitle}</span></p>
     </div>
 }
 

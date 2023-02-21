@@ -60,11 +60,10 @@ export const Navigation: React.FC<NavigationType> = ({
             {categories && status === StatusRequestEnum.Success && categoryStatus === StatusRequestEnum.Success &&
                 <div className={`${s.wrapperList} ${isOpen && s.wrapperListOpen}  `}>
                     {' '}
-                    <NavLink data-test-id={idBooks} onClick={toggleMenu} to="/books/all">
-                        <div
+                    <NavLink  onClick={toggleMenu} to="/books/all">
+                        <div data-test-id={idBooks}
                             className={` ${s.booksAll} ${pathname === '/books/all' ? s.activeBooksAll : ''}`}>Все
-                            книги
-                        </div>
+                            книги</div>
                         {' '}
                     </NavLink>
                     <ul>
