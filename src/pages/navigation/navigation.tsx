@@ -36,6 +36,7 @@ export const Navigation: React.FC<NavigationType> = ({
         }
 
 
+
     }, [pathname]);
     const handleSetIsOpen: () => void = () => {
         setIsOpen(!isOpen);
