@@ -24,16 +24,32 @@
 
       .containerSearchFilter {
         display: flex;
+          align-items: center;
         flex: 0 1 100%;
 
         .searchButton {
+
+
+
           @include SearchPanelButton;
             width: 350px;
-            @media (max-width: 768px) {
+            @media (max-width: 767px) {
 
                 width: 38px;
             }
           .searchWrapper {
+              input {
+                  caret-color: rgba(248, 54, 0, 1);
+                  @include text(14px,400,18px,#363636);
+
+                  @media (max-width: 568px) {
+                      @include text(12px,400,18px,#363636)
+                  }
+              }
+              input:focus {
+                  outline: none;
+
+              }
             width: 90%;
             display: flex;
 
@@ -48,6 +64,7 @@
             }
           }
           .searchButtonClose {
+              cursor: pointer;
             @media (max-width: 768px) {
               padding-right: 3%;
             }

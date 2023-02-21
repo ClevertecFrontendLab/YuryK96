@@ -7,18 +7,22 @@ export enum StatusRequestEnum {
 }
 
 export type InitialStateType = {
-    books: Books[] | [];
-    book: Book;
-    categories: CategoryType[] | null;
+    books:   Books[] ,
+    book: Book | null;
+    categories: CategoryType[]  ;
+    searchBooks: Books[];
     categoriesStatus : StatusRequestEnum | null,
+    bookStatus: StatusRequestEnum |  null,
+    bookError:string | null
     status: StatusRequestEnum | null;
     error: string | null;
+    categoryError : string | null
 };
 
 export type Books = {
     issueYear: string | null;
     rating: number | null;
-    title: string;
+    title: string ;
     authors: string[] | null;
     image: { url: string | null; };
     categories: string[] | null;
@@ -30,8 +34,6 @@ export type Books = {
 };
 
 export type Book = {
-    status: StatusRequestEnum | null
-    error: string | null,
     id: number;
     title: string;
     rating: number | null;
@@ -46,7 +48,7 @@ export type Book = {
     producer: string | null;
     authors: string[] | null;
     images: Array<{ url: string | null; }>;
-    categories: string[],
+    categories: string[] ,
     comments: CommentType[],
     booking: BookingType,
     delivery: DeliveryType,
@@ -97,9 +99,11 @@ type ErrorType = {
     }
 }
 
+
 export type CategoryType = {
     name: string,
     path: string,
     id: number
+    books: Books[]
 
 }

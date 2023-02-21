@@ -1,33 +1,37 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
-
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../redux-toolkit/books/store";
+import { searchBooks } from "../../../redux-toolkit/books/books-reducer";
 import { useWindowSize } from '../../../hooks/window-size-hook';
 
 import { FilterButton } from './filter-button';
 
 import s from './search-panel.module.scss';
 
-type Inputs = {
-  search: string;
-  filterSelect: string;
-};
 
-type SearchPanel = {
-  handleSetIsSortingList: (boolean: boolean) => void;
-  isSortingList: boolean;
-};
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const SearchPanel: React.FC<SearchPanel> = ({ handleSetIsSortingList, isSortingList }) => {
+
+
+
+export const SearchPanel: React.FC<SearchPanel> = ({ handleSetIsSortingList, isSortingList,toggleRatingSort, category,removeSearchText,addSearchText }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const dispatch = useDispatch<AppDispatch>()
+
   const windowWidth = useWindowSize();
-  const [selectedFilter, setSelectedFilter] = useState('');
   const { register, getValues, setFocus, setValue } = useForm<Inputs>();
 
-  const handleSelectedFilter: (nameFilter: string) => void = (nameFilter) => {
-    setSelectedFilter(nameFilter);
-  };
-  const handlerSendSearchData: () => void = () => {};
+
+
+  const handlerSendSearchData: () => void = useCallback(() => {
+     dispatch( searchBooks({search: getValues('search'), category }) )
+  },[category, dispatch, getValues])
+
+
+    useEffect( ()=>{
+        handlerSendSearchData()
+    },[category,handlerSendSearchData ] )
+
 
   const handlerCloseSearchFieldMobile: () => void = () => {
     if (getValues('search') === '' || null) {
@@ -37,7 +41,7 @@ export const SearchPanel: React.FC<SearchPanel> = ({ handleSetIsSortingList, isS
   const handlerOpenSearchFieldMobile: () => void = () => {
     if (!isSearchOpen) {
       setIsSearchOpen(true);
-      setFocus('search', { shouldSelect: true });
+      setFocus('search', );
     }
   };
 
@@ -54,7 +58,7 @@ export const SearchPanel: React.FC<SearchPanel> = ({ handleSetIsSortingList, isS
               className={`${s.searchButton} ${isSearchOpen ? s.searchButtonActive : ''}  `}
             >
               <div className={s.searchWrapper}>
-                <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  {!isSearchOpen ?  <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
                   <path
                     fillRule='evenodd'
                     clipRule='evenodd'
@@ -67,26 +71,43 @@ export const SearchPanel: React.FC<SearchPanel> = ({ handleSetIsSortingList, isS
                     d='M10.6284 10.6286C10.8887 10.3683 11.3108 10.3683 11.5712 10.6286L14.4712 13.5286C14.7315 13.789 14.7315 14.2111 14.4712 14.4714C14.2108 14.7318 13.7887 14.7318 13.5284 14.4714L10.6284 11.5714C10.368 11.3111 10.368 10.889 10.6284 10.6286Z'
                     fill='#A7A7A7'
                   />
-                </svg>
-                <input
+                </svg> :
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M7.33203 2.66732C4.7547 2.66732 2.66536 4.75666 2.66536 7.33398C2.66536 9.91131 4.7547 12.0007 7.33203 12.0007C9.90936 12.0007 11.9987 9.91131 11.9987 7.33398C11.9987 4.75666 9.90936 2.66732 7.33203 2.66732ZM1.33203 7.33398C1.33203 4.02028 4.01832 1.33398 7.33203 1.33398C10.6457 1.33398 13.332 4.02028 13.332 7.33398C13.332 10.6477 10.6457 13.334 7.33203 13.334C4.01832 13.334 1.33203 10.6477 1.33203 7.33398Z" fill="url(#paint0_linear_158_13220)"/>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M10.6289 10.6289C10.8892 10.3685 11.3113 10.3685 11.5717 10.6289L14.4717 13.5289C14.732 13.7892 14.732 14.2113 14.4717 14.4717C14.2113 14.732 13.7892 14.732 13.5289 14.4717L10.6289 11.5717C10.3685 11.3113 10.3685 10.8892 10.6289 10.6289Z" fill="url(#paint1_linear_158_13220)"/>
+                      <defs>
+                          <linearGradient id="paint0_linear_158_13220" x1="7.11591" y1="-20.9785" x2="-39.2622" y2="15.804" gradientUnits="userSpaceOnUse">
+                              <stop stopColor="#F83600"/>
+                              <stop offset="1" stopColor="#F9D423"/>
+                          </linearGradient>
+                          <linearGradient id="paint1_linear_158_13220" x1="12.474" y1="2.56224" x2="-3.88716" y2="15.5383" gradientUnits="userSpaceOnUse">
+                              <stop stopColor="#F83600"/>
+                              <stop offset="1" stopColor="#F9D423"/>
+                          </linearGradient>
+                      </defs>
+                  </svg>}
+
+                  <input
                   placeholder='Поиск книги или автора…'
                   data-test-id='input-search'
+
                   type='text'
                   {...register('search', {
-                    onChange: () => {
+                    onChange: (event: React.FormEvent<HTMLInputElement> ) => {
                       handlerSendSearchData();
+                       addSearchText(event.currentTarget.value)
                     },
                   })}
                 />
               </div>
-              {isSearchOpen && (
+              {isSearchOpen && !windowWidth.tablet && (
                 <div
                   data-test-id='button-search-close'
                   role='presentation'
                   className={s.searchButtonClose}
                   onClick={() => {
-                    setValue('search', '');
                     setIsSearchOpen(false);
+
                   }}
                 >
                   <svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -131,7 +152,7 @@ export const SearchPanel: React.FC<SearchPanel> = ({ handleSetIsSortingList, isS
               )}
             </div>
             {(!isSearchOpen || windowWidth.tablet) && (
-              <FilterButton selectedFilter={selectedFilter} handleSelectedFilter={handleSelectedFilter} />
+              <FilterButton toggleRatingSort={toggleRatingSort}  />
             )}
           </div>
         </form>
@@ -183,4 +204,18 @@ export const SearchPanel: React.FC<SearchPanel> = ({ handleSetIsSortingList, isS
       </div>
     </section>
   );
+};
+type Inputs = {
+    search: string;
+
+};
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+type SearchPanel = {
+    handleSetIsSortingList: (boolean: boolean) => void;
+    isSortingList: boolean;
+    toggleRatingSort: ()=>void
+
+    removeSearchText: ()=> void
+    addSearchText: (text: string)=> void
+    category: string | undefined
 };

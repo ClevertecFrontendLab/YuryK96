@@ -1,26 +1,39 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-import {  useSelector } from "react-redux";
 
-
+import { Error } from '../../common/error';
+import { Pending } from '../../common/pending';
+import {
+    getBooksStatus,
+    getBookStatus,
+    getCategoriesStatus
+} from '../../redux-toolkit/books/books-selectos';
+import { getCategories } from '../../redux-toolkit/books/books-thunks';
+import { StatusRequestEnum } from '../../redux-toolkit/books/books-type';
+import { AppDispatch } from '../../redux-toolkit/books/store';
 import { Footer } from '../footer';
 import { Header } from '../header';
-import { Pending } from "../../common/pending";
-import { Error } from "../../common/error";
-
-import { getBooksStatus } from "../../redux-toolkit/books/books-selectos";
 
 import s from './layout.module.scss';
-import { StatusRequestEnum } from "../../redux-toolkit/books/books-type";
 
 
 export const Layout = () => {
     const status = useSelector(getBooksStatus)
+    const categoriesStatus = useSelector(getCategoriesStatus)
+    const booksStatus = useSelector(getBookStatus)
+    const dispatch = useDispatch<AppDispatch>()
 
-  return  <section className={s.Layout}>
+    useEffect( ()=>{
+        dispatch(getCategories())
+    },[dispatch] )
 
 
-      { status === StatusRequestEnum.Pending && <Pending/>}
-      {status === StatusRequestEnum.Error && <Error/> }
+    return  <section className={s.Layout}>
+
+
+      { status === StatusRequestEnum.Pending && <Pending/> || booksStatus === StatusRequestEnum.Pending && <Pending/>|| categoriesStatus === StatusRequestEnum.Pending && <Pending/>}
+      {status === StatusRequestEnum.Error && <Error/> || categoriesStatus === StatusRequestEnum.Error && <Error/> }
         <Header />
 
         <div className={s.wrapperContent}>

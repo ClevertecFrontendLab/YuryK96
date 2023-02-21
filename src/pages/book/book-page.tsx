@@ -38,24 +38,32 @@ export const BookPage: React.FC = () => {
     const { userId } = useParams();
 
     const book = useSelector(getChosenBook);
-    const stars = countStars(book.rating);
+    const status = useSelector(getBookStatus);
+
 
     useEffect(() => {
         if (userId) {
             dispatch(getBook(userId));
         }
     }, [pathname, dispatch]);
+
+
+        const stars = countStars(book?.rating);
+
+
     return (
-        <section className={s.bookPage}>
-            {book.status === StatusRequestEnum.Error && <div className={s.wrapperError}><Error /></div>}
-            <BreadCrumbs title={book.title}  categoryBook={book.categories}  />
+       <section className={s.bookPage}>
+           {status === StatusRequestEnum.Error && <div className={s.wrapperError}><Error /></div>}
 
 
-            {book.status === StatusRequestEnum.Success && <div className={s.content}>
+            <BreadCrumbs  />
+
+           { book &&
+             StatusRequestEnum.Success && <div className={s.content}>
                 <div className={s.cover}>
                     {!book?.images ? (
                         <div className={s.nonCover}>
-                            {" "}a
+                            {" "}
                             <img src={bookCat} alt="cat book" />{" "}
                         </div>
                     ) : book.images.length === 1 ? (
@@ -119,7 +127,7 @@ export const BookPage: React.FC = () => {
                 </div>
                 <div className={s.infoWrapper}>
                     <div className={s.info}>
-                        <div className={s.name}>{book?.title}</div>
+                        <div data-test-id='book-title' className={s.name}>{book?.title}</div>
                         <div className={s.author}>
                             {book?.authors} {book?.issueYear}
                         </div>

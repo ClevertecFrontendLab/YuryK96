@@ -65,6 +65,11 @@
         -webkit-box-orient: vertical;
 
         @include text(14px, 600, 18px, #363636);
+
+          .redLetter {
+             background: none;
+              color: rgba(255, 82, 83);
+          }
       }
 
       .author {

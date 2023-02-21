@@ -1,16 +1,17 @@
 /* eslint-disable */
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getCategories } from "../../../redux-toolkit/books/books-selectos";
+import { getBookName, getCategories } from "../../../redux-toolkit/books/books-selectos";
 import s from './bread-crumbs.module.scss';
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 
 
 
-export const BreadCrumbs: React.FC<BreadCrumbsType> = ({title,categoryBook}) => {
+export const BreadCrumbs = () => {
     const { category } = useParams();
     const categories = useSelector(getCategories)
+    const bookTitle = useSelector(getBookName)
     const [categoryName, setCategoryName ]= useState<string>()
     useEffect( ()=>{
 
@@ -22,14 +23,8 @@ export const BreadCrumbs: React.FC<BreadCrumbsType> = ({title,categoryBook}) => 
             setCategoryName("Все книги");
         }
     },[category, categories] )
-
    return <div className={s.breadCrumbs}>
-        <p>{categoryName} / {title}</p>
+       <p><NavLink data-test-id='breadcrumbs-link' to={`/books/${category}`}> {categoryName}</NavLink> / <span data-test-id='book-name' >{bookTitle}</span></p>
     </div>
 }
 
-type BreadCrumbsType = {
-    title: string
-
-    categoryBook: string[]
-}
