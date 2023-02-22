@@ -3,13 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation, Thumbs, Pagination, Scrollbar } from "swiper";
+import {  Navigation, Thumbs, Pagination, Scrollbar } from "swiper";
 import { StatusRequestEnum } from "../../redux-toolkit/books/books-type";
-import emptyStar from "../../assets/images/stars/emptyStar.svg";
-import wholeStar from "../../assets/images/stars/star.svg";
 import { Button } from "../../common/button";
 import { getBook } from "../../redux-toolkit/books/books-thunks";
-
 import { BreadCrumbs } from "./bread-crumbs";
 
 import s from "./book-page.module.scss";
