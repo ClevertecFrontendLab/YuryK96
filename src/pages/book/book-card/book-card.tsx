@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { countStars } from '../../../helpers/stars-helper';
 import catBook from '../../../assets/images/books/bookCat.svg';
 import { Button } from '../../../common/button';
 import { AppDispatch } from '../../../redux-toolkit/books/store';
-import { searchBooks, sortRating } from '../../../redux-toolkit/books/books-reducer';
+import {  sortRating } from '../../../redux-toolkit/books/books-reducer';
 import { Books } from '../../../redux-toolkit/books/books-type';
 
 import s from './book-card.module.scss';
