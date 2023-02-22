@@ -23,7 +23,9 @@ const Hightlight: React.FC<HightlightType> = ({ filter, str }) => {
 
                 const coincidence = matchValue.shift();
 
-                return <span key={Math.random()}>{notCoincidence}<mark data-test-id='highlight-matches' className={s.redLetter}>{coincidence}</mark></span>;
+                return <span key={Math.random()}>{notCoincidence}
+                    <mark data-test-id="highlight-matches"
+                          className={s.redLetter}>{coincidence}</mark></span>;
             }
             return notCoincidence;
         });
@@ -57,6 +59,7 @@ export const BookCard: React.FC<Book> = ({
             {books.map((book) => {
                 const stars = countStars(book.rating);
 
+
                 return (
                     <div className={s.bookWrapper} key={book.id}>
                         <NavLink to={`/books/${category}/${book.id}`}>
@@ -68,12 +71,12 @@ export const BookCard: React.FC<Book> = ({
                                 <div className={s.wrapper}>
                                     <div className={s.stars}>
                                         {' '}
-                                        {stars.map((star) => (
+                                        { book.rating === null ?  <span className={s.noStars}>ещё нет оценок</span> :  stars.map((star) => (
                                             <div key={star.id} className={s.star}>
                                                 {' '}
                                                 <img src={star.star} alt="star" />{' '}
                                             </div>
-                                        ))}{' '}
+                                        ))  }{' '}
                                     </div>
                                     <div className={s.info}>
                                         <div className={s.name}>
