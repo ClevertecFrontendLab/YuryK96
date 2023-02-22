@@ -1,6 +1,6 @@
-import { AppStateType } from "./store";
-import { Books, CategoryType } from "./books-type";
-import { findBooksFromCategory } from "../../helpers/find-books-from-category-helper";
+import { AppStateType } from './store';
+import {  CategoryType } from './books-type';
+import { findBooksFromCategory } from '../../helpers/find-books-from-category-helper';
 
 export const getBooks = (categoryParams: string | undefined) => (state: AppStateType) => {
 

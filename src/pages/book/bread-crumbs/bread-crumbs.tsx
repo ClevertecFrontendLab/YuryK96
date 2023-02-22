@@ -6,8 +6,6 @@ import s from './bread-crumbs.module.scss';
 import { NavLink, useParams } from "react-router-dom";
 
 
-
-
 export const BreadCrumbs = () => {
     const { category } = useParams();
     const categories = useSelector(getCategories)
