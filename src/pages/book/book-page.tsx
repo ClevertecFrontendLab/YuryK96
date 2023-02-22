@@ -3,13 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation, Thumbs, Pagination, Scrollbar } from "swiper";
+import {  Navigation, Thumbs, Pagination, Scrollbar } from "swiper";
 import { StatusRequestEnum } from "../../redux-toolkit/books/books-type";
-import emptyStar from "../../assets/images/stars/emptyStar.svg";
-import wholeStar from "../../assets/images/stars/star.svg";
 import { Button } from "../../common/button";
 import { getBook } from "../../redux-toolkit/books/books-thunks";
-
 import { BreadCrumbs } from "./bread-crumbs";
 
 import s from "./book-page.module.scss";
@@ -38,20 +35,28 @@ export const BookPage: React.FC = () => {
     const { userId } = useParams();
 
     const book = useSelector(getChosenBook);
-    const stars = countStars(book.rating);
+    const status = useSelector(getBookStatus);
+
 
     useEffect(() => {
         if (userId) {
             dispatch(getBook(userId));
         }
     }, [pathname, dispatch]);
+
+
+        const stars = countStars(book?.rating);
+
+
     return (
-        <section className={s.bookPage}>
-            {book.status === StatusRequestEnum.Error && <div className={s.wrapperError}><Error /></div>}
-            <BreadCrumbs title={book.title}  categoryBook={book.categories}  />
+       <section className={s.bookPage}>
+           {status === StatusRequestEnum.Error && <div className={s.wrapperError}><Error /></div>}
 
 
-            {book.status === StatusRequestEnum.Success && <div className={s.content}>
+            <BreadCrumbs  />
+
+           { book &&
+             StatusRequestEnum.Success && <div className={s.content}>
                 <div className={s.cover}>
                     {!book?.images ? (
                         <div className={s.nonCover}>
@@ -119,7 +124,7 @@ export const BookPage: React.FC = () => {
                 </div>
                 <div className={s.infoWrapper}>
                     <div className={s.info}>
-                        <div className={s.name}>{book?.title}</div>
+                        <div data-test-id='book-title' className={s.name}>{book?.title}</div>
                         <div className={s.author}>
                             {book?.authors} {book?.issueYear}
                         </div>

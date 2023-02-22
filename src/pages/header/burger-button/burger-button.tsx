@@ -41,6 +41,7 @@ export const BurgerButton: React.FC<BurgerButtonType> = ({ toggleMenu, isOpen })
             idBooks='burger-books'
             idShowcase='burger-showcase'
             toggleMenu={toggleMenu}
+            id='burger'
           />
 
         </div>

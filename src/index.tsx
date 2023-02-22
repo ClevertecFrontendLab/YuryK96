@@ -17,7 +17,7 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root') as Element | DocumentFragment);
 
 root.render(
-  <React.StrictMode>
+
     <Provider store={store}>
       <HashRouter>
         <Routes>
@@ -35,5 +35,5 @@ root.render(
         </Routes>
       </HashRouter>
     </Provider>
-  </React.StrictMode>
+
 );
