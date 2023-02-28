@@ -1,7 +1,7 @@
 @import 'src/variables';
 
 .button {
-  @include button($paddingMedium, 28px);
+  @include button;
 }
 
 .buttonBookPage {
@@ -27,3 +27,12 @@
 .buttonBlock {
   @include buttonBlock;
 }
+.buttonBlockSecond {
+  @include buttonBlock;
+    background: #EBEBEB;
+    border: none;
+    pointer-events: none;
+
+}
+
+

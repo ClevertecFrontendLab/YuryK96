@@ -4,6 +4,10 @@ $paddingBig: 24px;
 $paddingLarge: 32px;
 $paddingEnormous: 64px;
 $paddingLeftRight: 5%;
+$dark: #363636;
+$gray: #A7A7A7;
+$gray-black: #727272;
+$orange: #F85D09;
 
 :root {
   --headerHeight: 75px;
@@ -58,20 +62,19 @@ $paddingLeftRight: 5%;
   border-radius: 599px;
 }
 
-@mixin button($margin, $paddingTop) {
-  margin: $paddingMedium $paddingMedium;
+@mixin button {
   padding-top: 28px;
   letter-spacing: 0.2px;
   font-weight: 600;
   color: white;
-  height: 40px;
+
   border-radius: 20px;
   font-size: 12px;
   line-height: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 1s;
+  transition: .2s;
   cursor: pointer;
 
   & p {
@@ -79,7 +82,7 @@ $paddingLeftRight: 5%;
   }
 }
 @mixin buttonActive {
-  background: rgba(248, 54, 0, 1);
+  background: $orange;
 
   &:hover {
     background: rgba(249, 212, 35, 1);

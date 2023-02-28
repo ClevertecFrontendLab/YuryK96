@@ -208,9 +208,9 @@ export const BookPage: React.FC = () => {
 
                 <BookComments comments={book?.comments} />
 
-
-                <Button id="button-rating" isBookEstimate={true} booking={null}
-                        bookPageText="ОЦЕНИТЬ КНИГУ" />
+                <div className={s.buttonWrapper} >
+                <Button id="button-rating"  isBookEstimate={true} booking={null}
+                        bookPageText="ОЦЕНИТЬ КНИГУ" /></div>
             </div>}
         </section>
     );
