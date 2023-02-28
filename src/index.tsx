@@ -13,8 +13,8 @@ import { store } from './redux-toolkit/books/store';
 
 import './fonts.css';
 import './index.css';
-import { Registration } from './pages/registration/registration';
-import { LayoutAuthorization } from './pages/layout/layout-authorization';
+import { Registration } from './pages/auth/registration/registration';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root') as Element | DocumentFragment);
@@ -35,11 +35,10 @@ root.render(
             <Route path='/Profile' element={<div> Profile </div>} />
             <Route path='/exit' element={<div> exit </div>} />
           </Route>
+            <Route path='/auth' element={<div>Login</div>} />
+            <Route path='/registration' element={<Registration/>} />
+            <Route path='/forgot-pass' element={<div>Forgot Pass</div>} />
 
-            <Route path='/authorization' element={<LayoutAuthorization/>}>
-            <Route path='/authorization/login' element={<div>Login</div>} />
-            <Route path='/authorization/registration' element={<Registration/>} />
-        </Route>
         </Routes>
       </HashRouter>
     </Provider>
