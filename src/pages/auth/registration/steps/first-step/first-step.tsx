@@ -80,8 +80,8 @@ export const FirstStep: React.FC<FirstStepType> = ({
                     className="authorization_container__WrapperCheck">{!getFieldState('password').error && getValues('password') &&
                     <img src={check}
                          alt="check" />}</div>
-                <img role="presentation" onClick={togglePasswordVisiblity}
-                     src={passwordShown ? openEye : closeEye} alt="eye" /></div>
+                { watch('password')?.length > 0 && <img role="presentation" onClick={togglePasswordVisiblity}
+                      src={passwordShown ? openEye : closeEye} alt="eye" />}</div>
             <input id="password" className="authorization_container__secondInput"
                    onFocus={ ()=> {
                        setButtonCheckErrorStateFalse()

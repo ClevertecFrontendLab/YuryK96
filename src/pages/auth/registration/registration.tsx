@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 import React, { useState } from 'react';
 import {
     useForm
@@ -22,17 +22,22 @@ export const Registration: React.FC<RegistrationType> = () => {
         getValues,
         watch,
         getFieldState,
+        control,
         formState: { errors, isValid }
     } = useForm<FormValue>({ mode: 'onChange' });
-    const [stepNumber, setStepNumber] = useState(3);
+    const [stepNumber, setStepNumber] = useState(1);
     const [buttonCheckError, setButtonCheckError] = useState(false);
 
     const { mobile } = useWindowSize();
 
 
+
+    const onSubmit = (data: FormValue) => {
+        console.log(data);
+    };
     const nextStep = () => {
         if (stepNumber === 3) {
-            setStepNumber(1);
+            handleSubmit(onSubmit)()
         } else {
             setStepNumber(stepNumber + 1);
         }
@@ -47,16 +52,14 @@ export const Registration: React.FC<RegistrationType> = () => {
         }
     };
 
-    const onSubmit = (data: any) => {
-        console.log(data);
-    };
+
     return <section className="authorization_wrapper">
         <h1 className="authorization_title">Cleverland</h1>
         <div className="authorization_item">
             <div className="authorization_container">
                 <h3 className="authorization_container__header">Регистрация</h3>
                 <div className="authorization_container__steps"> {stepNumber} шаг из 3</div>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form  onSubmit={handleSubmit(onSubmit)} >
                     <div className="authorization_container__form">
                         {stepNumber === 1 &&
                             <FirstStep register={register} getFieldState={getFieldState}
@@ -71,7 +74,8 @@ export const Registration: React.FC<RegistrationType> = () => {
                             />}
                         {stepNumber === 3 &&
                             <ThirdStep register={register} buttonCheckError={buttonCheckError}
-                                       setButtonCheckErrorStateFalse={setButtonCheckErrorStateFalse} getFieldState={getFieldState}
+                                       control={control} setButtonCheckErrorStateFalse={setButtonCheckErrorStateFalse} getFieldState={getFieldState}
+                                       watch={watch}
                             />}
                     </div>
                 </form>
@@ -86,7 +90,7 @@ export const Registration: React.FC<RegistrationType> = () => {
 
                             textClass="registrationButtonText" />
                     <div className="question_authorization"><p> Есть учетная запись?</p> <NavLink
-                        to="/login">
+                        to="/auth">
                         <div className="question_authorization__wrapperLink"><span> Войти</span>
                             <div><img src={rightArrow} alt="arrow" /></div>
                         </div>

@@ -13,7 +13,8 @@ import { store } from './redux-toolkit/books/store';
 
 import './fonts.css';
 import './index.css';
-import { Registration } from './pages/auth/registration/registration';
+import { Registration } from './pages/auth/registration';
+import { Authorization } from './pages/auth/authorization';
 
 
 
@@ -35,7 +36,7 @@ root.render(
             <Route path='/Profile' element={<div> Profile </div>} />
             <Route path='/exit' element={<div> exit </div>} />
           </Route>
-            <Route path='/auth' element={<div>Login</div>} />
+            <Route path='/auth' element={<Authorization/>} />
             <Route path='/registration' element={<Registration/>} />
             <Route path='/forgot-pass' element={<div>Forgot Pass</div>} />
 

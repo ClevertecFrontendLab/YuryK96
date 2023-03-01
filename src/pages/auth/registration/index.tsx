@@ -1,1 +1,0 @@
-import { Registration } from './registration';
