@@ -15,6 +15,8 @@ import './fonts.css';
 import './index.css';
 import { Registration } from './pages/auth/registration';
 import { Authorization } from './pages/auth/authorization';
+import { PasswordRecovery } from './pages/auth/password-recovery';
+import { NewPassword } from './pages/auth/new-password';
 
 
 
@@ -38,7 +40,8 @@ root.render(
           </Route>
             <Route path='/auth' element={<Authorization/>} />
             <Route path='/registration' element={<Registration/>} />
-            <Route path='/forgot-pass' element={<div>Forgot Pass</div>} />
+            <Route path='/forgot-pass' element={<NewPassword/>} />
+            <Route path='/forgot-pass1' element={<PasswordRecovery/>} />
 
         </Routes>
       </HashRouter>

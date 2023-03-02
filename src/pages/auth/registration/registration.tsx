@@ -69,7 +69,8 @@ export const Registration: React.FC<RegistrationType> = () => {
                                        getValues={getValues} errors={errors}
                             />}
                         {stepNumber === 2 &&
-                            <SecondStep register={register}  buttonCheckError={buttonCheckError}
+                            <SecondStep register={register}
+                                       watch={watch} buttonCheckError={buttonCheckError}
                                         setButtonCheckErrorStateFalse={setButtonCheckErrorStateFalse} getFieldState={getFieldState}
                             />}
                         {stepNumber === 3 &&

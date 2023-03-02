@@ -5,10 +5,10 @@ import {
     UseFormGetValues, UseFormRegister, UseFormWatch
 } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
-import check from '../../../../../assets/images/authorization/check.svg';
-import closeEye from '../../../../../assets/images/authorization/closeEye.svg';
-import openEye from '../../../../../assets/images/authorization/openEye.svg';
-import { FormValue } from '../../authorization';
+import check from '../../../../assets/images/authorization/check.svg';
+import closeEye from '../../../../assets/images/authorization/closeEye.svg';
+import openEye from '../../../../assets/images/authorization/openEye.svg';
+import { FormValue } from '../authorization';
 
 
 
@@ -57,8 +57,8 @@ export const Inputs: React.FC<FirstStepType> = ({
 
             <label htmlFor="username" className="floating-label">Логин</label>
             <div
-                className="authorization_container__firstNote" style={!getFieldState('login').error && !buttonCheckError ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} }>
-               <div style={ {height:'16px'} } >{getFieldState('login').error  || buttonCheckError ?
+                className="authorization_container__firstNote" style={!getFieldState('login').error && !buttonCheckError ||  watch('login') !== '' ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} }>
+               <div style={ {height:'16px'} } >{getFieldState('login').error  || buttonCheckError  && watch('login') === '' ?
                     <p style={{ color: 'red' }}>Поле не должно быть пустым</p> : null } </div>  </div>
         </div>
         <div className="authorization_container__WrapperSecondInput">
@@ -79,12 +79,16 @@ export const Inputs: React.FC<FirstStepType> = ({
             <label htmlFor="password" className="floating-label">Пароль</label>
 
             <div
-                className="authorization_container__secondNote"  style={!getFieldState('password').error && !buttonCheckError ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} } >
-                <div style={ {height:'16px'} } >  {getFieldState('password').error || buttonCheckError ?
+                className="authorization_container__secondNote"  style={!getFieldState('password').error && !buttonCheckError ||  watch('password') !== ''  ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} } >
+                <div style={ {height:'16px'} } >  {getFieldState('password').error || buttonCheckError && watch('password') === '' ?
                     <p style={{ color: 'red' }}>Поле не должно быть пустым</p> : null} </div>  </div>
 
 
             <div className='authorization_container__forgetPassword'> <NavLink to="/forgot-pass"> <span>Забыли логин и пароль?</span></NavLink>  </div>
+
+            {/* <div className='authorization_container__wrongPassword'><div style={ {color:'red'} } >Неверный логин или пароль!</div> <NavLink to="/forgot-pass"> <div>Восстановить?</div> </NavLink>  </div> */}
+
+
         </div>
     </React.Fragment>;
 };

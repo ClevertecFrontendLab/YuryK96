@@ -20,6 +20,7 @@ export const ThirdStep: React.FC<SecondStepType> = ({
                                                         watch
                                                      }) => {
 
+
 const firstCodeNumber =  String( watch('phoneNumber')).charAt(5)
    return  <React.Fragment>
         <div className="authorization_container__WrapperFirstInput">
@@ -45,10 +46,10 @@ const firstCodeNumber =  String( watch('phoneNumber')).charAt(5)
 
             <label htmlFor="number" className="floating-label">Номер телефона</label>
             <div
-                className="authorization_container__firstNote"
-                style={!getFieldState('phoneNumber').error && !buttonCheckError ? { borderTop: '1px solid #BFC4C9' } : { borderTop: '1px solid red' }}>
-                {getFieldState('phoneNumber').error || buttonCheckError ?
-                    <p style={{ color: 'red' }}>В формате +375 (xx) xxx-xx-xx</p> : null}  </div>
+                className={`authorization_container__firstNote ${!watch('phoneNumber') && buttonCheckError || !getFieldState('phoneNumber').error && !buttonCheckError || !getFieldState('phoneNumber').error && buttonCheckError ? 'grayBorderTop' :   'redBorderTop'}`}
+                style={ !watch('phoneNumber') && buttonCheckError ? {borderTop:'1px solid red' } : {} }  >
+                {getFieldState('phoneNumber').error || buttonCheckError && !getFieldState('phoneNumber') ?  <p style={{ color: 'red' }}>В формате +375 (xx) xxx-xx-xx</p> :  !watch('phoneNumber') && buttonCheckError ?
+                    <p style={{ color: 'red' }}>Поле не может быть пустым</p> : null  }  </div>
         </div>
         <div className="authorization_container__WrapperSecondInput">
             <input id="email" className="authorization_container__secondInput"
@@ -65,9 +66,9 @@ const firstCodeNumber =  String( watch('phoneNumber')).charAt(5)
             <label htmlFor="email" className="floating-label">E-mail</label>
             <div
                 className="authorization_container__secondNote"
-                style={!getFieldState('email').error && !buttonCheckError ? { borderTop: '1px solid #BFC4C9' } : { borderTop: '1px solid red' }}>
-                {getFieldState('email').error || buttonCheckError ?
-                    <p style={{ color: 'red' }}>Введите корректный e-mail</p> : null} </div>
+                style={!getFieldState('email').error && !buttonCheckError || !getFieldState('email').error && watch('email') !== '' ?  { borderTop: '1px solid #BFC4C9' } : { borderTop: '1px solid red' }}>
+                {getFieldState('email').error && watch('email') !== '' || buttonCheckError && watch('email') !== ''  ?
+                    <p style={{ color: 'red' }}>Введите корректный e-mail</p> : getFieldState('email').error && watch('email') === '' || buttonCheckError  && watch('email') === ''  ?  <p style={{ color: 'red' }}>Поле не может быть пустым</p> : null } </div>
         </div>
     </React.Fragment>;
 }

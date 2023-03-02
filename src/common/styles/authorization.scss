@@ -50,6 +50,23 @@
                   min-height:454px;
               }
           }
+            &__toPersonalArea {
+                border-radius: 16px 16px 0 0;
+                margin: -48px 0 32px -56px;
+                display: flex;
+                background: #F9F9FA;
+                align-items: center;
+                width: calc( 100% + 112px);
+                height: 64px;
+
+                span {
+                    @include text(12px,18px,600,$gray-black);
+                    margin-left: 15px;
+                }
+            }
+            &__wrapperImg {
+                margin-left: 19px;
+            }
             form {
                 width: 100%;
             }
@@ -58,7 +75,11 @@
                 width: 90%;
                 margin: 0 5%;
                 padding: 24px $paddingMedium;
-
+                &__toPersonalArea {
+                    width: calc( 100% + 36px);
+                    margin-left: -18px;
+                    margin-top: -24px;
+                }
             }
 
 
@@ -207,6 +228,16 @@
                 margin-top: 10px;
                 padding-left: 12px;
             }
+            &__forgetPassword_email {
+                @include text(12px,500,16px,$gray);
+                margin-top: 2px;
+                padding-left: 12px;
+            }
+            &__wrongPassword {
+                @include text(12px,500,16px,rgba(54, 54, 54, 1));
+                margin-top: 10px;
+                padding-left: 12px;
+            }
         }
     }
 }
@@ -223,3 +254,9 @@
 
 
 
+.redBorderTop {
+    border-top: 1px solid red;
+}
+.grayBorderTop {
+    border-top: 1px solid #BFC4C9;
+}

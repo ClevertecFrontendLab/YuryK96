@@ -136,7 +136,7 @@ describe('authorization and registartion', () => {
             cy.url().should('contain', '/registration');
             cy.get('[data-test-id=register-form] input[name=username]').type('Test1');
             cy.get('[data-test-id=register-form] input[name=password]').type('Qwerty12');
-            cy.get('[data-test-id=auth]').screenshot('registration-inputs');
+            cy.get('[data-test-id=auth]').screenshot('registration-input');
             cy.contains('следующий шаг', { matchCase: false }).should('be.enabled').click();
             cy.get('[data-test-id=register-form] input[name=firstName]').type('firstName');
             cy.get('[data-test-id=register-form] input[name=lastName]').type('lastName');

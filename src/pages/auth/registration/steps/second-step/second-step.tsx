@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     FieldErrors,
-    UseFormGetFieldState, UseFormRegister
+    UseFormGetFieldState, UseFormRegister, UseFormWatch
 } from 'react-hook-form';
 import { FormValue } from '../../registration';
 
@@ -11,7 +11,8 @@ export const SecondStep: React.FC<SecondStepType> = ({
                                                          register,
                                                          getFieldState,
                                                          setButtonCheckErrorStateFalse,
-                                                         buttonCheckError
+                                                         buttonCheckError,
+    watch
                                                      }) => <React.Fragment>
         <div className="authorization_container__WrapperFirstInput">
             <input type="text" id="username"
@@ -24,8 +25,8 @@ export const SecondStep: React.FC<SecondStepType> = ({
 
             <label htmlFor="username" className="floating-label">Имя</label>
             <div
-                className="authorization_container__firstNote" style={!getFieldState('firstName').error && !buttonCheckError ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} }>
-                {getFieldState('firstName').error  || buttonCheckError ?
+                className="authorization_container__firstNote" style={!getFieldState('firstName').error && !buttonCheckError ||  watch('firstName') !== '' ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} }>
+                {getFieldState('firstName').error  || buttonCheckError && watch('firstName') === '' ?
                     <p style={{ color: 'red' }}>Поле не должно быть пустым</p> : null }  </div>
         </div>
         <div className="authorization_container__WrapperSecondInput">
@@ -37,8 +38,8 @@ export const SecondStep: React.FC<SecondStepType> = ({
 
             <label htmlFor="lastName" className="floating-label">Фамилия</label>
             <div
-                className="authorization_container__secondNote"  style={!getFieldState('lastName').error && !buttonCheckError ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} } >
-                {getFieldState('lastName').error || buttonCheckError ?
+                className="authorization_container__secondNote"  style={!getFieldState('lastName').error && !buttonCheckError ||  watch('lastName') !== ''  ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} } >
+                {getFieldState('lastName').error || buttonCheckError && watch('lastName') === ''  ?
                     <p style={{ color: 'red' }}>Поле не должно быть пустым</p> : null}  </div>
         </div>
     </React.Fragment>
@@ -49,6 +50,7 @@ type SecondStepType = {
     register: UseFormRegister<FormValue>;
     setButtonCheckErrorStateFalse: ()=>void
     buttonCheckError: boolean
+    watch: UseFormWatch<FormValue>
 
 };
 

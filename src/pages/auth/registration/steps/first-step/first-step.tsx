@@ -62,7 +62,7 @@ export const FirstStep: React.FC<FirstStepType> = ({
             <label htmlFor="username" className="floating-label">Придумайте логин для
                 входа</label>
             <div className="authorization_container__firstNote"
-                style={!isLoginFocus && getFieldState('login').error || buttonCheckError ? {
+                style={!isLoginFocus && getFieldState('login').error || buttonCheckError && getFieldState('login').error || buttonCheckError && watch('login') === '' ? {
                     color: 'red',
                     borderTop: '1px solid red'
                 } : getFieldState('login').error && watch('login') !== '' ? {  borderTop: '1px solid red'} : { borderTop: '1px solid #BFC4C9'}  }
@@ -101,7 +101,7 @@ export const FirstStep: React.FC<FirstStepType> = ({
             <label htmlFor="password" className="floating-label">Пароль</label>
 
             <div  className="authorization_container__secondNote"
-                 style={!isPasswordFocus && getFieldState('password').error || buttonCheckError ? {
+                 style={!isPasswordFocus && getFieldState('password').error || buttonCheckError && getFieldState('password').error || buttonCheckError && watch('password') === ''  ? {
                 color: 'red',
                      borderTop: '1px solid red'
             } :  getFieldState('password').error && watch('password') !== '' ? {  borderTop: '1px solid red'} : { borderTop: '1px solid #BFC4C9'}} >
