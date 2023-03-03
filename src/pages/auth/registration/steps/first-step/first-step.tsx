@@ -49,7 +49,7 @@ export const FirstStep: React.FC<FirstStepType> = ({
 
                    className="authorization_container__firstInput"
                    autoComplete="off"
-                   required={true} {...register('login', {
+                   required={true} {...register('username', {
                 onBlur: () => setLoginFocusStateFalse(),
 
                 required: true, validate: {
@@ -62,16 +62,16 @@ export const FirstStep: React.FC<FirstStepType> = ({
             <label htmlFor="username" className="floating-label">Придумайте логин для
                 входа</label>
             <div data-test-id='hint' className="authorization_container__firstNote"
-                style={!isLoginFocus && getFieldState('login').error || buttonCheckError && getFieldState('login').error || buttonCheckError && watch('login') === '' ? {
+                style={!isLoginFocus && getFieldState('username').error || buttonCheckError && getFieldState('username').error || buttonCheckError && watch('username') === '' ? {
                     color: 'red',
                     borderTop: '1px solid red'
-                } : getFieldState('login').error && watch('login') !== '' ? {  borderTop: '1px solid red'} : { borderTop: '1px solid #BFC4C9'}  }
+                } : getFieldState('username').error && watch('username') !== '' ? {  borderTop: '1px solid red'} : { borderTop: '1px solid #BFC4C9'}  }
             >
                 <p>Используйте для
                     логина
                     <span
                         style={errors?.login?.message === 'must be latin characters' ? { color: 'red' } : {}}> латинский алфавит </span> и <span
-                        style={/[0-9]/.test(watch('login')) || watch('login') === '' ? {} : { color: 'red' }}>   цифры </span>
+                        style={/[0-9]/.test(watch('username')) || watch('username') === '' ? {} : { color: 'red' }}>   цифры </span>
                 </p></div>
         </div>
         <div className="authorization_container__WrapperSecondInput">

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { useWindowSize } from '../../../hooks/window-size-hook';
 import { searchBooks } from '../../../redux-toolkit/books/books-reducer';
-import { AppDispatch } from '../../../redux-toolkit/books/store';
+import { AppDispatch } from '../../../redux-toolkit/store';
 
 import { FilterButton } from './filter-button';
 

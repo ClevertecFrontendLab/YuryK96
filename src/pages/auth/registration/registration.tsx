@@ -5,6 +5,7 @@ import {
 } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
 import s from './registration.module.scss';
 import '../../../common/styles/authorization.scss';
 import { Button } from '../../../common/button';
@@ -13,6 +14,9 @@ import { useWindowSize } from '../../../hooks/window-size-hook';
 import { FirstStep } from './steps/first-step';
 import { SecondStep } from './steps/second-step';
 import { ThirdStep } from './steps/third-step';
+import { authAPI } from '../../../api/auth';
+import { AppDispatch } from '../../../redux-toolkit/store';
+import { registration } from '../../../redux-toolkit/auth/auth-thunks';
 
 
 export const Registration: React.FC<RegistrationType> = () => {
@@ -27,13 +31,13 @@ export const Registration: React.FC<RegistrationType> = () => {
     } = useForm<FormValue>({ mode: 'onChange' });
     const [stepNumber, setStepNumber] = useState(1);
     const [buttonCheckError, setButtonCheckError] = useState(false);
-
+    const dispatch = useDispatch<AppDispatch>()
     const { mobile } = useWindowSize();
 
 
 
     const onSubmit = (data: FormValue) => {
-        console.log(data);
+        dispatch(registration(data))
     };
     const nextStep = () => {
         if (stepNumber === 3) {
@@ -105,11 +109,11 @@ export const Registration: React.FC<RegistrationType> = () => {
 };
 
 export type FormValue = {
-    login: string,
+    username: string,
     password: string
     firstName: string,
     lastName: string
-    phoneNumber: number
+    phone: string
     email: string
 }
 

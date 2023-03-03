@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
 import { getBooks, getCategories } from '../../../redux-toolkit/books/books-thunks';
-import { AppDispatch } from '../../../redux-toolkit/books/store';
+import { AppDispatch } from '../../../redux-toolkit/store';
 import { Navigation } from '../../navigation';
 
 import s from './layout-home-page.module.scss';

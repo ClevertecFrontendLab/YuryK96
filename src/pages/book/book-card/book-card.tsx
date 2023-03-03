@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { countStars } from '../../../helpers/stars-helper';
 import catBook from '../../../assets/images/books/bookCat.svg';
 import { Button } from '../../../common/button';
-import { AppDispatch } from '../../../redux-toolkit/books/store';
+import { AppDispatch } from '../../../redux-toolkit/store';
 import {  sortRating } from '../../../redux-toolkit/books/books-reducer';
 import { Books } from '../../../redux-toolkit/books/books-type';
 

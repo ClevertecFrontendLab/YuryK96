@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AppDispatch, AppStateType } from "./store";
+import { AppDispatch, AppStateType } from "../store";
 import { booksAPI } from "../../api/books";
 import { Book, Books, CategoryType } from "./books-type";
 

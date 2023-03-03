@@ -11,7 +11,7 @@ import {
 } from '../../redux-toolkit/books/books-selectos';
 import { getCategories } from '../../redux-toolkit/books/books-thunks';
 import { StatusRequestEnum } from '../../redux-toolkit/books/books-type';
-import { AppDispatch } from '../../redux-toolkit/books/store';
+import { AppDispatch } from '../../redux-toolkit/store';
 import { Footer } from '../footer';
 import { Header } from '../header';
 
