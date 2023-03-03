@@ -25,7 +25,7 @@ export const SecondStep: React.FC<SecondStepType> = ({
 
             <label htmlFor="username" className="floating-label">Имя</label>
             <div
-                className="authorization_container__firstNote" style={!getFieldState('firstName').error && !buttonCheckError ||  watch('firstName') !== '' ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} }>
+                className="authorization_container__firstNote" data-test-id='hint' style={!getFieldState('firstName').error && !buttonCheckError ||  watch('firstName') !== '' ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} }>
                 {getFieldState('firstName').error  || buttonCheckError && watch('firstName') === '' ?
                     <p style={{ color: 'red' }}>Поле не должно быть пустым</p> : null }  </div>
         </div>
@@ -38,7 +38,7 @@ export const SecondStep: React.FC<SecondStepType> = ({
 
             <label htmlFor="lastName" className="floating-label">Фамилия</label>
             <div
-                className="authorization_container__secondNote"  style={!getFieldState('lastName').error && !buttonCheckError ||  watch('lastName') !== ''  ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} } >
+                className="authorization_container__secondNote" data-test-id='hint'  style={!getFieldState('lastName').error && !buttonCheckError ||  watch('lastName') !== ''  ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} } >
                 {getFieldState('lastName').error || buttonCheckError && watch('lastName') === ''  ?
                     <p style={{ color: 'red' }}>Поле не должно быть пустым</p> : null}  </div>
         </div>

@@ -15,6 +15,8 @@
         margin-bottom: 46px;
 
         @media (max-width: 580px) {
+            position: absolute;
+            top: 16px;
             @include text(18px, 700, 28px, white);
             margin-bottom: $paddingSmall;
 
@@ -237,6 +239,13 @@
                 @include text(12px,500,16px,rgba(54, 54, 54, 1));
                 margin-top: 10px;
                 padding-left: 12px;
+            }
+
+            &__message {
+                margin-top: 32px;
+                margin-bottom: 10px;
+                @include text(16px,400,24px,$dark);
+                text-align: center;
             }
         }
     }

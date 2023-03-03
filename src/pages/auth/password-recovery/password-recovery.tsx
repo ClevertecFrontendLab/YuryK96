@@ -46,7 +46,7 @@ export const PasswordRecovery: React.FC<PasswordRecoveryType> = () => {
     };
 
 
-    return <section className="authorization_wrapper">
+    return <section className="authorization_wrapper"   data-test-id='auth'>
         <h1 className="authorization_title">Cleverland</h1>
         <div className="authorization_item">
             <div  className="authorization_container authorization_container_personalArea">
@@ -58,7 +58,7 @@ export const PasswordRecovery: React.FC<PasswordRecoveryType> = () => {
                 </div>
                 <h3 className="authorization_container__header">Восстановление пароля</h3>
 
-                <form  onSubmit={handleSubmit(onSubmit)} >
+                <form data-test-id='send-email-form' onSubmit={handleSubmit(onSubmit)} >
                     <div className="authorization_container__form">
                             <Input register={register} getFieldState={getFieldState}
                                    buttonCheckError={buttonCheckError}
@@ -67,22 +67,23 @@ export const PasswordRecovery: React.FC<PasswordRecoveryType> = () => {
                             />
 
                     </div>
-                </form>
-                <div className="authorization_container__buttonWrapper ">
-                    <Button clickEvent={isValid ? ()=>{ handleSubmit(onSubmit)() } : setButtonCheckErrorStateTrue  }
-                            bookPageText="ВОССТАНОВИТЬ" width="100%"
-                            height={mobile ? '40px' : '52px'}
-                            margin="0"
-                            paddingTop="5px"
+                    <div className="authorization_container__buttonWrapper ">
+                        <Button clickEvent={isValid ? ()=>{ handleSubmit(onSubmit)() } : setButtonCheckErrorStateTrue  }
+                                bookPageText="ВОССТАНОВИТЬ" width="100%"
+                                height={mobile ? '40px' : '52px'}
+                                margin="0"
+                                paddingTop="5px"
 
-                            textClass="registrationButtonText" />
-                    <div style={ {marginTop:'16px'} } className="question_authorization"><p> Нет учётной записи?</p> <NavLink
-                        to="/registration">
-                        <div className="question_authorization__wrapperLink"><span> Регистрация</span>
-                            <div><img src={rightArrow} alt="arrow" /></div>
-                        </div>
-                    </NavLink></div>
-                </div>
+                                textClass="registrationButtonText" />
+                        <div style={ {marginTop:'16px'} } className="question_authorization"><p> Нет учётной записи?</p> <NavLink
+                            to="/registration">
+                            <div className="question_authorization__wrapperLink"><span> Регистрация</span>
+                                <div><img src={rightArrow} alt="arrow" /></div>
+                            </div>
+                        </NavLink></div>
+                    </div>
+                </form>
+
             </div>
         </div>
     </section>;

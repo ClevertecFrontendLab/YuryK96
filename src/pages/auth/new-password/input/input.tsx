@@ -41,11 +41,11 @@ export const Input: React.FC<FirstStepType> = ({
     };
     return  <div className="authorization_container__WrapperSecondInput">
         <div className="authorization_container__WrapperIcons">
-            <div
+            <div  data-test-id='checkmark'
                 className="authorization_container__WrapperCheck">{!getFieldState('password').error && getValues('password') &&
                 <img src={check}
                      alt="check" />}</div>
-            { watch('password')?.length > 0 && <img role="presentation" onClick={togglePasswordVisiblity}
+            { watch('password')?.length > 0 && <img role="presentation" onClick={togglePasswordVisiblity}   data-test-id={passwordShown ? 'eye-opened' : 'eye-closed'}
                                                     src={passwordShown ? openEye : closeEye} alt="eye" />}</div>
         <input id="password" className="authorization_container__secondInput"
                onFocus={ ()=> {
@@ -65,7 +65,7 @@ export const Input: React.FC<FirstStepType> = ({
 
         <label htmlFor="password" className="floating-label">Новый пароль</label>
 
-        <div  className="authorization_container__secondNote"
+        <div  data-test-id='hint' className="authorization_container__secondNote"
               style={!isPasswordFocus && getFieldState('password').error || buttonCheckError && getFieldState('password').error ? {
                   color: 'red',
                   borderTop: '1px solid red'
@@ -82,7 +82,7 @@ export const Input: React.FC<FirstStepType> = ({
         <div className="authorization_container__WrapperSecondInput">
             <div  className="authorization_container__WrapperIcons">
 
-                { watch('repeatPassword')?.length > 0 && <img style={ {marginLeft:'25px'} } role="presentation" onClick={toggleRepeatPasswordVisiblity}
+                { watch('repeatPassword')?.length > 0 && <img style={ {marginLeft:'25px'} } role="presentation" onClick={toggleRepeatPasswordVisiblity} data-test-id={passwordShown ? 'eye-opened' : 'eye-closed'}
                                                         src={repeatPasswordShown ? openEye : closeEye} alt="eye" />}</div>
             <input id="repeatPassword" className="authorization_container__secondInput"
                    onFocus={ ()=> {
@@ -99,7 +99,7 @@ export const Input: React.FC<FirstStepType> = ({
 
             <label htmlFor="repeatPassword" className="floating-label">Повторить пароль</label>
 
-            <div
+            <div data-test-id='hint'
                 className="authorization_container__secondNote"  style={!getFieldState('repeatPassword').error && !buttonCheckError ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} } >
                 <div style={ {height:'16px'} } >  {getFieldState('repeatPassword').error || buttonCheckError ?
                     <p style={{ color: 'red' }}>Пароли не совпадают</p> : null} </div>  </div>

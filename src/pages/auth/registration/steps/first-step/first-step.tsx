@@ -61,7 +61,7 @@ export const FirstStep: React.FC<FirstStepType> = ({
 
             <label htmlFor="username" className="floating-label">Придумайте логин для
                 входа</label>
-            <div className="authorization_container__firstNote"
+            <div data-test-id='hint' className="authorization_container__firstNote"
                 style={!isLoginFocus && getFieldState('login').error || buttonCheckError && getFieldState('login').error || buttonCheckError && watch('login') === '' ? {
                     color: 'red',
                     borderTop: '1px solid red'
@@ -76,11 +76,11 @@ export const FirstStep: React.FC<FirstStepType> = ({
         </div>
         <div className="authorization_container__WrapperSecondInput">
             <div className="authorization_container__WrapperIcons">
-                <div
+                <div data-test-id='checkmark'
                     className="authorization_container__WrapperCheck">{!getFieldState('password').error && getValues('password') &&
                     <img src={check}
                          alt="check" />}</div>
-                { watch('password')?.length > 0 && <img role="presentation" onClick={togglePasswordVisiblity}
+                { watch('password')?.length > 0 && <img data-test-id={passwordShown ? 'eye-opened' : 'eye-closed'} role="presentation" onClick={togglePasswordVisiblity}
                       src={passwordShown ? openEye : closeEye} alt="eye" />}</div>
             <input id="password" className="authorization_container__secondInput"
                    onFocus={ ()=> {
@@ -100,7 +100,7 @@ export const FirstStep: React.FC<FirstStepType> = ({
 
             <label htmlFor="password" className="floating-label">Пароль</label>
 
-            <div  className="authorization_container__secondNote"
+            <div  data-test-id='hint' className="authorization_container__secondNote"
                  style={!isPasswordFocus && getFieldState('password').error || buttonCheckError && getFieldState('password').error || buttonCheckError && watch('password') === ''  ? {
                 color: 'red',
                      borderTop: '1px solid red'

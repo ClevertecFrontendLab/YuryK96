@@ -29,8 +29,6 @@ export const Authorization: React.FC<AuthorizationType> = () => {
 
     const { mobile } = useWindowSize();
 
-
-
     const onSubmit = (data: FormValue) => {
         console.log(data);
     };
@@ -47,13 +45,13 @@ export const Authorization: React.FC<AuthorizationType> = () => {
     };
 
 
-    return <section className="authorization_wrapper">
+    return <section className="authorization_wrapper" data-test-id='auth'>
         <h1 className="authorization_title">Cleverland</h1>
         <div className="authorization_item">
             <div  className="authorization_container authorization_container_personalArea">
                 <h3 className="authorization_container__header">Вход в личный кабинет</h3>
 
-                <form  onSubmit={handleSubmit(onSubmit)} >
+                <form data-test-id='auth-form' onSubmit={handleSubmit(onSubmit)} >
                     <div className="authorization_container__form">
                             <Inputs register={register} getFieldState={getFieldState}
                                     watch={watch}
@@ -63,22 +61,24 @@ export const Authorization: React.FC<AuthorizationType> = () => {
                             />
 
                     </div>
-                </form>
-                <div className="authorization_container__buttonWrapper ">
-                    <Button clickEvent={isValid ? ()=>{ handleSubmit(onSubmit)() } : setButtonCheckErrorStateTrue  }
-                            bookPageText="ВХОД" width="100%"
-                            height={mobile ? '40px' : '52px'}
-                            margin="0"
-                            paddingTop="5px"
 
-                            textClass="registrationButtonText" />
-                    <div className="question_authorization"><p> Нет учётной записи?</p> <NavLink
-                        to="/registration">
-                        <div className="question_authorization__wrapperLink"><span> Регистрация</span>
-                            <div><img src={rightArrow} alt="arrow" /></div>
-                        </div>
-                    </NavLink></div>
-                </div>
+                    <div className="authorization_container__buttonWrapper ">
+                        <Button clickEvent={isValid ? ()=>{ handleSubmit(onSubmit)() } : setButtonCheckErrorStateTrue  }
+                                bookPageText="ВХОД" width="100%"
+                                height={mobile ? '40px' : '52px'}
+                                margin="0"
+                                paddingTop="5px"
+
+                                textClass="registrationButtonText" />
+                        <div className="question_authorization"><p> Нет учётной записи?</p> <NavLink
+                            to="/registration">
+                            <div className="question_authorization__wrapperLink"><span> Регистрация</span>
+                                <div><img src={rightArrow} alt="arrow" /></div>
+                            </div>
+                        </NavLink></div>
+                    </div>
+                </form>
+
             </div>
         </div>
     </section>;

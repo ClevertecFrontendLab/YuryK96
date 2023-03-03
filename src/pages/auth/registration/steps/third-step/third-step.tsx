@@ -45,7 +45,7 @@ const firstCodeNumber =  String( watch('phoneNumber')).charAt(5)
 
 
             <label htmlFor="number" className="floating-label">Номер телефона</label>
-            <div
+            <div data-test-id='hint'
                 className={`authorization_container__firstNote ${!watch('phoneNumber') && buttonCheckError || !getFieldState('phoneNumber').error && !buttonCheckError || !getFieldState('phoneNumber').error && buttonCheckError ? 'grayBorderTop' :   'redBorderTop'}`}
                 style={ !watch('phoneNumber') && buttonCheckError ? {borderTop:'1px solid red' } : {} }  >
                 {getFieldState('phoneNumber').error || buttonCheckError && !getFieldState('phoneNumber') ?  <p style={{ color: 'red' }}>В формате +375 (xx) xxx-xx-xx</p> :  !watch('phoneNumber') && buttonCheckError ?
@@ -64,7 +64,7 @@ const firstCodeNumber =  String( watch('phoneNumber')).charAt(5)
             })} autoComplete="off" required={true} />
 
             <label htmlFor="email" className="floating-label">E-mail</label>
-            <div
+            <div data-test-id='hint'
                 className="authorization_container__secondNote"
                 style={!getFieldState('email').error && !buttonCheckError || !getFieldState('email').error && watch('email') !== '' ?  { borderTop: '1px solid #BFC4C9' } : { borderTop: '1px solid red' }}>
                 {getFieldState('email').error && watch('email') !== '' || buttonCheckError && watch('email') !== ''  ?

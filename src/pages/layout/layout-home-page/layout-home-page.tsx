@@ -19,6 +19,7 @@ export const LayoutHomePage = () => {
 
     },[dispatch] )
 
+
     return  <section className={s.LayoutHomePage}>
     <div className={s.wrapperNavigation}>
             <Navigation

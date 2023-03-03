@@ -53,13 +53,13 @@ export const Registration: React.FC<RegistrationType> = () => {
     };
 
 
-    return <section className="authorization_wrapper">
+    return <section className="authorization_wrapper" data-test-id='auth'>
         <h1 className="authorization_title">Cleverland</h1>
         <div className="authorization_item">
             <div className="authorization_container">
                 <h3 className="authorization_container__header">Регистрация</h3>
                 <div className="authorization_container__steps"> {stepNumber} шаг из 3</div>
-                <form  onSubmit={handleSubmit(onSubmit)} >
+                <form data-test-id='register-form'  onSubmit={handleSubmit(onSubmit)} >
                     <div className="authorization_container__form">
                         {stepNumber === 1 &&
                             <FirstStep register={register} getFieldState={getFieldState}
@@ -79,24 +79,26 @@ export const Registration: React.FC<RegistrationType> = () => {
                                        watch={watch}
                             />}
                     </div>
-                </form>
-                <div className="authorization_container__buttonWrapper">
-                    <Button clickEvent={isValid ? nextStep : setButtonCheckErrorStateTrue}
-                            bookPageText={stepNumber === 1 ? 'СЛЕДУЮЩИЙ ШАГ' :
-                                stepNumber === 2 ? 'ПОСЛЕДНИЙ ШАГ' : 'ЗАРЕГИСТРИРОВАТЬСЯ'
-                    } width="100%"
-                            height={mobile ? '40px' : '52px'}
-                            margin="18px 0"
-                            paddingTop="5px"
 
-                            textClass="registrationButtonText" />
-                    <div className="question_authorization"><p> Есть учетная запись?</p> <NavLink
-                        to="/auth">
-                        <div className="question_authorization__wrapperLink"><span> Войти</span>
-                            <div><img src={rightArrow} alt="arrow" /></div>
-                        </div>
-                    </NavLink></div>
-                </div>
+                    <div className="authorization_container__buttonWrapper">
+                        <Button clickEvent={isValid ? nextStep : setButtonCheckErrorStateTrue}
+                                bookPageText={stepNumber === 1 ? 'СЛЕДУЮЩИЙ ШАГ' :
+                                    stepNumber === 2 ? 'ПОСЛЕДНИЙ ШАГ' : 'ЗАРЕГИСТРИРОВАТЬСЯ'
+                                } width="100%"
+                                height={mobile ? '40px' : '52px'}
+                                margin="18px 0"
+                                paddingTop="5px"
+
+                                textClass="registrationButtonText" />
+                        <div className="question_authorization"><p> Есть учетная запись?</p> <NavLink
+                            to="/auth">
+                            <div className="question_authorization__wrapperLink"><span> Войти</span>
+                                <div><img src={rightArrow} alt="arrow" /></div>
+                            </div>
+                        </NavLink></div>
+                    </div>
+                </form>
+
             </div>
         </div>
     </section>;

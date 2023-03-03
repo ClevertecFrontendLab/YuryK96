@@ -61,14 +61,14 @@ export const NewPassword: React.FC<NewPasswordType> = () => {
     };
 
 
-    return <section className="authorization_wrapper">
+    return <section className="authorization_wrapper" data-test-id='auth'>
         <h1 className="authorization_title">Cleverland</h1>
         <div className="authorization_item">
             <div className="authorization_container authorization_container_personalArea">
 
                 <h3 className="authorization_container__header">Восстановление пароля</h3>
 
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form data-test-id='reset-password-form' onSubmit={handleSubmit(onSubmit)}>
                     <div className="authorization_container__form">
                         <Input register={register} getFieldState={getFieldState}
                                watch={watch}
@@ -78,24 +78,25 @@ export const NewPassword: React.FC<NewPasswordType> = () => {
                         />
 
                     </div>
-                </form>
-                <div className="authorization_container__buttonWrapper ">
-                    <Button clickEvent={isValid ? () => {
-                        handleSubmit(onSubmit)();
-                    } : () => {
-                        setButtonCheckErrorStateTrue();
-                        setIsFirstStatusButtonFalse();
-                    }}
-                            bookPageText="СОХРАНИТЬ ИЗМЕНЕНИЯ" width="100%"
-                            isActive={firstStatusButton? true : isActiveButton }
-                            height={mobile ? '40px' : '52px'}
-                            margin="0"
-                            paddingTop="5px"
+                    <div className="authorization_container__buttonWrapper ">
+                        <Button clickEvent={isValid ? () => {
+                            handleSubmit(onSubmit)();
+                        } : () => {
+                            setButtonCheckErrorStateTrue();
+                            setIsFirstStatusButtonFalse();
+                        }}
+                                bookPageText="СОХРАНИТЬ ИЗМЕНЕНИЯ" width="100%"
+                                isActive={firstStatusButton? true : isActiveButton }
+                                height={mobile ? '40px' : '52px'}
+                                margin="0"
+                                paddingTop="5px"
 
-                            textClass="registrationButtonText" />
-                    <div style={{ marginTop: '16px' }} className="question_authorization"><p>После
-                        сохранения войдите в библиотеку, используя новый пароль</p></div>
-                </div>
+                                textClass="registrationButtonText" />
+                        <div style={{ marginTop: '16px' }} className="question_authorization"><p>После
+                            сохранения войдите в библиотеку, используя новый пароль</p></div>
+                    </div>
+                </form>
+
             </div>
         </div>
     </section>;

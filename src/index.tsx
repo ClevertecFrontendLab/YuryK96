@@ -17,6 +17,7 @@ import { Registration } from './pages/auth/registration';
 import { Authorization } from './pages/auth/authorization';
 import { PasswordRecovery } from './pages/auth/password-recovery';
 import { NewPassword } from './pages/auth/new-password';
+import { AuthMessage } from './common/auth-message';
 
 
 
@@ -39,9 +40,10 @@ root.render(
             <Route path='/exit' element={<div> exit </div>} />
           </Route>
             <Route path='/auth' element={<Authorization/>} />
+            <Route path='/auth1' element={<AuthMessage/>} />
             <Route path='/registration' element={<Registration/>} />
-            <Route path='/forgot-pass' element={<NewPassword/>} />
-            <Route path='/forgot-pass1' element={<PasswordRecovery/>} />
+            <Route path='/forgot-pass' element={<  PasswordRecovery/>} />
+            <Route path='/forgot-pass1' element={<NewPassword/>} />
 
         </Routes>
       </HashRouter>
