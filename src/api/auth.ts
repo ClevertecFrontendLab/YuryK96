@@ -1,9 +1,13 @@
-import { DefaultResponseTypes, instance } from './api';
+import { authAxios, instance } from './api';
+import { DefaultResponseTypes } from '../redux-toolkit/auth/auth-type';
 
 
 export const authAPI = {
     createNewUser(  data:CreateNewUserType ) {
-        return instance.post<DefaultResponseTypes<{ jwt: string, user: ResponseNewUser }>> ('auth/local/register', {...data}).then((res) => res);
+        return authAxios.post<DefaultResponseTypes> ('auth/local/register', {...data}).then((res) => res);
+    }  ,
+    authorization(  data:AuthorizationType ) {
+        return authAxios.post<DefaultResponseTypes> ('auth/local', {...data}).then((res) => res);
     }
 };
 
@@ -15,7 +19,7 @@ export type CreateNewUserType = {
         phone: string,
         email: string
 }
-export type ResponseNewUser = {
+export type UserType = {
     blocked: boolean,
     confirmed: boolean,
     createdAt: string,
@@ -23,9 +27,14 @@ export type ResponseNewUser = {
     provider: string,
     updatedAt: string,
     username: string,
-        password: string,
+        password?: string,
         firstName: string,
         lastName: string,
         phone: string,
         email: string
+}
+
+export type AuthorizationType = {
+    identifier: string,
+    password: string
 }

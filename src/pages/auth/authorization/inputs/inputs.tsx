@@ -48,7 +48,7 @@ export const Inputs: React.FC<FirstStepType> = ({
 
                    className="authorization_container__firstInput"
                    autoComplete="off"
-                   required={true} {...register('login', {
+                   required={true} {...register('identifier', {
                 onBlur: () => setLoginFocusStateFalse(),
 
                 required: true
@@ -57,9 +57,9 @@ export const Inputs: React.FC<FirstStepType> = ({
             <label htmlFor="username" className="floating-label">Логин</label>
             <div data-test-id="hint"
                  className="authorization_container__firstNote"
-                 style={!getFieldState('login').error && !buttonCheckError || watch('login') !== '' ? { borderTop: '1px solid #BFC4C9' } : { borderTop: '1px solid red' }}>
+                 style={!getFieldState('identifier').error && !buttonCheckError || watch('identifier') !== '' ? { borderTop: '1px solid #BFC4C9' } : { borderTop: '1px solid red' }}>
                 <div
-                    style={{ height: '16px' }}>{getFieldState('login').error || buttonCheckError && watch('login') === '' ?
+                    style={{ height: '16px' }}>{getFieldState('identifier').error || buttonCheckError && watch('identifier') === '' ?
                     <p style={{ color: 'red' }}>Поле не должно быть пустым</p> : null} </div>
             </div>
         </div>

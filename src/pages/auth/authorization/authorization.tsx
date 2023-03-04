@@ -4,13 +4,16 @@ import {
     useForm
 } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
 import s from './authorization.module.scss';
 import '../../../common/styles/authorization.scss';
 import { Button } from '../../../common/button';
 import rightArrow from '../../../assets/images/authorization/rightArrow.svg';
 import { useWindowSize } from '../../../hooks/window-size-hook';
 import { Inputs } from './inputs';
+
+import { AppDispatch } from '../../../redux-toolkit/store';
+import { authorization } from '../../../redux-toolkit/auth/auth-thunks';
 
 
 
@@ -24,13 +27,13 @@ export const Authorization: React.FC<AuthorizationType> = () => {
         control,
         formState: { errors, isValid }
     } = useForm<FormValue>({ mode: 'onChange' });
-
+    const dispatch = useDispatch<AppDispatch>()
     const [buttonCheckError, setButtonCheckError] = useState(false);
 
     const { mobile } = useWindowSize();
 
     const onSubmit = (data: FormValue) => {
-        console.log(data);
+       dispatch(authorization(data))
     };
 
 
@@ -85,7 +88,7 @@ export const Authorization: React.FC<AuthorizationType> = () => {
 };
 
 export type FormValue = {
-    login: string,
+    identifier: string,
     password: string
 }
 
