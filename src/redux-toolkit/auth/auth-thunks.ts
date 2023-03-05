@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError, AxiosResponse } from 'axios';
 import { AppDispatch, AppStateType } from '../store';
-import { authAPI, AuthorizationType, CreateNewUserType } from '../../api/auth';
+import { authAPI, AuthorizationType, CreateNewUserType, UserType } from '../../api/auth';
 import { DefaultResponseTypes } from './auth-type';
 
 
@@ -22,7 +22,7 @@ export const registration = createAppAsyncThunk(
             return response.data.user;
         } catch (error) {
             const err = error as AxiosError;
-            return rejectWithValue(err.message);
+            return rejectWithValue( String(err.response?.status));
         }
     }
 );
@@ -31,16 +31,15 @@ export const authorization = createAppAsyncThunk(
     async (data: AuthorizationType, { rejectWithValue }) => {
         try {
 
-            const response:DefaultResponseTypes = await authAPI.authorization(data).then( (res)=> {
+            const response:UserType  = await authAPI.authorization(data).then( (res)=> {
                 localStorage.setItem('token',  res.data.jwt);
-                return response
+                return res.data.user;
             });
 
-            return response.data.user;
+           return response
         } catch (error) {
             const err = error as AxiosError;
-
-            return rejectWithValue(err.message);
+            return rejectWithValue( String(err.response?.status));
         }
     }
 );

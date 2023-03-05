@@ -5,7 +5,7 @@ import {
 } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import s from './registration.module.scss';
 import '../../../common/styles/authorization.scss';
 import { Button } from '../../../common/button';
@@ -17,14 +17,20 @@ import { ThirdStep } from './steps/third-step';
 import { authAPI } from '../../../api/auth';
 import { AppDispatch } from '../../../redux-toolkit/store';
 import { registration } from '../../../redux-toolkit/auth/auth-thunks';
+import { StatusRequestEnum } from '../../../redux-toolkit/books/books-type';
+import { Pending } from '../../../common/pending';
+import { getAuthError, getAuthStatus } from '../../../redux-toolkit/auth/auth-selectos';
+import { AuthMessage } from '../../../common/auth-message';
+import { clearAuthError } from '../../../redux-toolkit/auth/auth-reducer';
 
 
-export const Registration: React.FC<RegistrationType> = () => {
+export const Registration: React.FC = () => {
     const {
         register,
         handleSubmit,
         getValues,
         watch,
+        reset,
         getFieldState,
         control,
         formState: { errors, isValid }
@@ -33,6 +39,9 @@ export const Registration: React.FC<RegistrationType> = () => {
     const [buttonCheckError, setButtonCheckError] = useState(false);
     const dispatch = useDispatch<AppDispatch>()
     const { mobile } = useWindowSize();
+    const authStatus = useSelector(getAuthStatus)
+    const authError = useSelector(getAuthError)
+
 
 
 
@@ -42,10 +51,23 @@ export const Registration: React.FC<RegistrationType> = () => {
     const nextStep = () => {
         if (stepNumber === 3) {
             handleSubmit(onSubmit)()
-        } else {
+            setStepNumber(stepNumber + 1);
+        }else if (stepNumber === 4){
+            if (authError && authError !== '400' ) {
+                handleSubmit(onSubmit)()
+                dispatch(clearAuthError());
+            }
+            else {
+                setStepNumber(1);
+                reset();
+                dispatch(clearAuthError());
+            }
+        }
+        else {
             setStepNumber(stepNumber + 1);
         }
     };
+
 
     const setButtonCheckErrorStateTrue = () => {
         setButtonCheckError(true);
@@ -57,7 +79,10 @@ export const Registration: React.FC<RegistrationType> = () => {
     };
 
 
-    return <section className="authorization_wrapper" data-test-id='auth'>
+    return   <React.Fragment>{  authError === '400' ? <AuthMessage title='Данные не сохранились' message='Такой логин или e-mail уже записан в системе. Попробуйте зарегистрироваться по другому логину или e-mail.' buttonText='НАЗАД К РЕГИСТРИАЦИИ'   isClickEventButton={true} clickEventButton={nextStep} />: authError &&  authError !== '400' ? <AuthMessage title='Данные не сохранились' message='Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз' buttonText='ПОВТОРИТЬ'  isClickEventButton={true} clickEventButton={nextStep}  /> : stepNumber === 4 ? <AuthMessage title='Регистрация успешна' message='Регистрация прошла успешно. Зайдите в личный кабинет, используя свои логин и пароль' buttonText='ВХОД'   buttonLink='/auth' /> :  <section className="authorization_wrapper"  data-test-id='auth'>
+
+        { authStatus === StatusRequestEnum.Pending && <Pending/> }
+
         <h1 className="authorization_title">Cleverland</h1>
         <div className="authorization_item">
             <div className="authorization_container">
@@ -105,7 +130,7 @@ export const Registration: React.FC<RegistrationType> = () => {
 
             </div>
         </div>
-    </section>;
+    </section> } </React.Fragment>
 };
 
 export type FormValue = {
@@ -118,5 +143,3 @@ export type FormValue = {
 }
 
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type RegistrationType = {}

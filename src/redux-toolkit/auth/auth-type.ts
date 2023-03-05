@@ -5,6 +5,7 @@ export type InitialStateType = {
     user: null | UserType,
     authError: null | string,
     authStatus: null | string,
+    isAuth: boolean
 }
 
 

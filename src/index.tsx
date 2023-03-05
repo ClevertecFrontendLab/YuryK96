@@ -40,7 +40,6 @@ root.render(
             <Route path='/exit' element={<div> exit </div>} />
           </Route>
             <Route path='/auth' element={<Authorization/>} />
-            <Route path='/auth1' element={<AuthMessage/>} />
             <Route path='/registration' element={<Registration/>} />
             <Route path='/forgot-pass' element={<  PasswordRecovery/>} />
             <Route path='/forgot-pass1' element={<NewPassword/>} />

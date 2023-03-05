@@ -4,7 +4,7 @@ import {
     useForm
 } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import s from './authorization.module.scss';
 import '../../../common/styles/authorization.scss';
 import { Button } from '../../../common/button';
@@ -14,10 +14,15 @@ import { Inputs } from './inputs';
 
 import { AppDispatch } from '../../../redux-toolkit/store';
 import { authorization } from '../../../redux-toolkit/auth/auth-thunks';
+import { getAuthError, getAuthStatus } from '../../../redux-toolkit/auth/auth-selectos';
+import { StatusRequestEnum } from '../../../redux-toolkit/books/books-type';
+import { Pending } from '../../../common/pending';
+import { AuthMessage } from '../../../common/auth-message';
+import { clearAuthError } from '../../../redux-toolkit/auth/auth-reducer';
 
 
 
-export const Authorization: React.FC<AuthorizationType> = () => {
+export const Authorization: React.FC = () => {
     const {
         register,
         handleSubmit,
@@ -29,9 +34,13 @@ export const Authorization: React.FC<AuthorizationType> = () => {
     } = useForm<FormValue>({ mode: 'onChange' });
     const dispatch = useDispatch<AppDispatch>()
     const [buttonCheckError, setButtonCheckError] = useState(false);
-
+    const authStatus = useSelector(getAuthStatus)
+    const authError = useSelector(getAuthError)
     const { mobile } = useWindowSize();
 
+    const handleClearAuthError = ()=> {
+        dispatch(clearAuthError())
+    }
     const onSubmit = (data: FormValue) => {
        dispatch(authorization(data))
     };
@@ -48,7 +57,11 @@ export const Authorization: React.FC<AuthorizationType> = () => {
     };
 
 
-    return <section className="authorization_wrapper" data-test-id='auth'>
+    return   <React.Fragment>{ authError && authError !== '400' ? <AuthMessage title='Данные не сохранились' message='Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз' buttonText='ПОВТОРИТЬ' buttonLink='/auth' reset={true} />: <section className="authorization_wrapper" data-test-id='auth'>
+
+
+        { authStatus === StatusRequestEnum.Pending && <Pending/> }
+
         <h1 className="authorization_title">Cleverland</h1>
         <div className="authorization_item">
             <div  className="authorization_container authorization_container_personalArea">
@@ -56,12 +69,12 @@ export const Authorization: React.FC<AuthorizationType> = () => {
 
                 <form data-test-id='auth-form' onSubmit={handleSubmit(onSubmit)} >
                     <div className="authorization_container__form">
-                            <Inputs register={register} getFieldState={getFieldState}
-                                    watch={watch}
-                                       buttonCheckError={buttonCheckError}
-                                        setButtonCheckErrorStateFalse={setButtonCheckErrorStateFalse}
-                                       getValues={getValues}
-                            />
+                        <Inputs register={register} getFieldState={getFieldState}
+                                watch={watch} handleClearAuthError={handleClearAuthError}
+                                buttonCheckError={buttonCheckError}
+                                setButtonCheckErrorStateFalse={setButtonCheckErrorStateFalse}
+                                getValues={getValues}
+                        />
 
                     </div>
 
@@ -75,7 +88,7 @@ export const Authorization: React.FC<AuthorizationType> = () => {
                                 textClass="registrationButtonText" />
                         <div className="question_authorization"><p> Нет учётной записи?</p> <NavLink
                             to="/registration">
-                            <div className="question_authorization__wrapperLink"><span> Регистрация</span>
+                            <div role='presentation' onClick={handleClearAuthError} className="question_authorization__wrapperLink"><span> Регистрация</span>
                                 <div><img src={rightArrow} alt="arrow" /></div>
                             </div>
                         </NavLink></div>
@@ -84,7 +97,7 @@ export const Authorization: React.FC<AuthorizationType> = () => {
 
             </div>
         </div>
-    </section>;
+    </section> }  </React.Fragment>
 };
 
 export type FormValue = {
@@ -93,5 +106,3 @@ export type FormValue = {
 }
 
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type AuthorizationType = {}

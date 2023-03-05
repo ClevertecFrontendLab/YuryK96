@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
 import {
-    FieldErrors,
     UseFormGetFieldState,
     UseFormGetValues, UseFormRegister, UseFormWatch
 } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
-import check from '../../../../assets/images/authorization/check.svg';
+import { useSelector } from 'react-redux';
 import closeEye from '../../../../assets/images/authorization/closeEye.svg';
 import openEye from '../../../../assets/images/authorization/openEye.svg';
 import { FormValue } from '../authorization';
+import { getAuthError } from '../../../../redux-toolkit/auth/auth-selectos';
 
 
 export const Inputs: React.FC<FirstStepType> = ({
                                                     register,
                                                     getFieldState,
                                                     getValues, watch
-                                                    ,
+                                                    ,handleClearAuthError,
                                                     setButtonCheckErrorStateFalse,
                                                     buttonCheckError
                                                 }) => {
     const [passwordShown, setPasswordShown] = useState(false);
     const [isLoginFocus, setIsLoginFocus] = useState(false);
     const [isPasswordFocus, setIsPasswordFocus] = useState(false);
+    const authError = useSelector(getAuthError)
     const togglePasswordVisiblity = () => {
         setPasswordShown(!passwordShown);
     };
@@ -56,8 +57,7 @@ export const Inputs: React.FC<FirstStepType> = ({
 
             <label htmlFor="username" className="floating-label">Логин</label>
             <div data-test-id="hint"
-                 className="authorization_container__firstNote"
-                 style={!getFieldState('identifier').error && !buttonCheckError || watch('identifier') !== '' ? { borderTop: '1px solid #BFC4C9' } : { borderTop: '1px solid red' }}>
+                 className={`authorization_container__firstNote  ${ !getFieldState('identifier').error && !buttonCheckError || watch('identifier') !== '' ? 'grayBorderTop' : 'redBorderTop'}  ${ authError === '400' && 'redBorderTop' }`}>
                 <div
                     style={{ height: '16px' }}>{getFieldState('identifier').error || buttonCheckError && watch('identifier') === '' ?
                     <p style={{ color: 'red' }}>Поле не должно быть пустым</p> : null} </div>
@@ -84,18 +84,17 @@ export const Inputs: React.FC<FirstStepType> = ({
             <label htmlFor="password" className="floating-label">Пароль</label>
 
             <div data-test-id="hint"
-                 className="authorization_container__secondNote"
-                 style={!getFieldState('password').error && !buttonCheckError || watch('password') !== '' ? { borderTop: '1px solid #BFC4C9' } : { borderTop: '1px solid red' }}>
+                 className={`authorization_container__secondNote  ${ !getFieldState('password').error && !buttonCheckError || watch('password') !== '' ? 'grayBorderTop' :  'redBorderTop' }  ${ authError === '400' && 'redBorderTop' }`}>
                 <div
                     style={{ height: '16px' }}>  {getFieldState('password').error || buttonCheckError && watch('password') === '' ?
                     <p style={{ color: 'red' }}>Поле не должно быть пустым</p> : null} </div>
             </div>
 
+            <div data-test-id="hint">
+                { authError === '400' ?   <div role='presentation' onClick={handleClearAuthError} className='authorization_container__wrongPassword'><span style={ {color:'red'} } >Неверный логин или пароль!</span> <NavLink to="/forgot-pass"> <span style={ {display: 'block'} } >Восстановить?</span> </NavLink>  </div>  :   <div role='presentation' onClick={handleClearAuthError}  className="authorization_container__forgetPassword"><NavLink to="/forgot-pass">
+                    <span>Забыли логин и пароль?</span></NavLink>     </div>  }
 
-            <div className="authorization_container__forgetPassword"><NavLink to="/forgot-pass">
-                <span>Забыли логин и пароль?</span></NavLink></div>
-
-            {/* <div className='authorization_container__wrongPassword'><div style={ {color:'red'} } >Неверный логин или пароль!</div> <NavLink to="/forgot-pass"> <div>Восстановить?</div> </NavLink>  </div> */}
+            </div>
 
 
         </div>
@@ -110,6 +109,6 @@ type FirstStepType = {
     watch: UseFormWatch<FormValue>
     setButtonCheckErrorStateFalse: () => void
     buttonCheckError: boolean
-
+    handleClearAuthError: ()=> void
 };
 
