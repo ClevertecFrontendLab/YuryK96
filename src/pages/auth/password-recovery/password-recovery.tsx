@@ -1,10 +1,11 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     useForm
 } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
+import { useDispatch, useSelector } from 'react-redux';
 import s from './password-recovery.module.scss';
 import '../../../common/styles/authorization.scss';
 import { Button } from '../../../common/button';
@@ -12,6 +13,12 @@ import rightArrow from '../../../assets/images/authorization/rightArrow.svg';
 import leftArrow from '../../../assets/images/authorization/leftArrow.svg';
 import { useWindowSize } from '../../../hooks/window-size-hook';
 import { Input } from './input';
+import { AppDispatch } from '../../../redux-toolkit/store';
+import { sendEmail } from '../../../redux-toolkit/auth/auth-thunks';
+import { AuthMessage } from '../../../common/auth-message';
+import { getAuthError } from '../../../redux-toolkit/auth/auth-selectos';
+import { clearAuthError } from '../../../redux-toolkit/auth/auth-reducer';
+import { NewPassword } from '../new-password';
 
 
 
@@ -23,18 +30,31 @@ export const PasswordRecovery: React.FC<PasswordRecoveryType> = () => {
         watch,
         formState: {  isValid }
     } = useForm<FormValue>({ mode: 'onChange' });
-
+    const dispatch = useDispatch<AppDispatch>()
     const [buttonCheckError, setButtonCheckError] = useState(false);
-
+    const [isEmailSent, setIsEmailSent] = useState(false);
+    const [isNewPasswordPage, setIsNewPasswordPage] = useState(false);
+    const [urlCode, setUrlCode] = useState('');
+    const authError = useSelector(getAuthError)
+    const location = useLocation()
     const { mobile } = useWindowSize();
 
-
-
+    const handleClearAuthError = ()=> {
+        dispatch ( clearAuthError() )
+    }
     const onSubmit = (data: FormValue) => {
-        console.log(data);
+        dispatch ( sendEmail(data) )
+        setIsEmailSent(true)
     };
+    useEffect( ()=>{
+        const url = new URLSearchParams(location.search)
+        const urlCode = url.get('code')
 
-
+            if (urlCode){
+                setUrlCode(urlCode)
+                setIsNewPasswordPage(true)
+            }
+    },[location.search] )
 
     const setButtonCheckErrorStateTrue = () => {
         setButtonCheckError(true);
@@ -46,12 +66,22 @@ export const PasswordRecovery: React.FC<PasswordRecoveryType> = () => {
     };
 
 
-    return <section className="authorization_wrapper"   data-test-id='auth'>
+
+    if (isNewPasswordPage) {
+      return  <NewPassword urlCode={urlCode}/>
+    }
+
+
+    if (isEmailSent && !authError) {
+        return <AuthMessage isButton={false} title='Письмо выслано' message='Перейдите в вашу почту, чтобы воспользоваться подсказками по восстановлению пароля'/>
+    }
+
+    return   <section className="authorization_wrapper"   data-test-id='auth'>
         <h1 className="authorization_title">Cleverland</h1>
         <div className="authorization_item">
             <div  className="authorization_container authorization_container_personalArea">
                 <div className='authorization_container__toPersonalArea' >
-                    <div className='authorization_container__wrapperImg' >
+                    <div role='presentation' onClick={handleClearAuthError}  className='authorization_container__wrapperImg' >
                       <NavLink to='/auth'>  <img src={leftArrow} alt='left Arrow'/></NavLink>
                     </div>
                         <span>ВХОД В ЛИЧНЫЙ КАБИНЕТ</span>
@@ -62,7 +92,7 @@ export const PasswordRecovery: React.FC<PasswordRecoveryType> = () => {
                     <div className="authorization_container__form">
                             <Input register={register} getFieldState={getFieldState}
                                    buttonCheckError={buttonCheckError}
-
+                                   authError={authError}
  watch={watch}                                  setButtonCheckErrorStateFalse={setButtonCheckErrorStateFalse}
                             />
 
@@ -77,7 +107,7 @@ export const PasswordRecovery: React.FC<PasswordRecoveryType> = () => {
                                 textClass="registrationButtonText" />
                         <div style={ {marginTop:'16px'} } className="question_authorization"><p> Нет учётной записи?</p> <NavLink
                             to="/registration">
-                            <div className="question_authorization__wrapperLink"><span> Регистрация</span>
+                            <div  role='presentation' onClick={handleClearAuthError}  className="question_authorization__wrapperLink"><span> Регистрация</span>
                                 <div><img src={rightArrow} alt="arrow" /></div>
                             </div>
                         </NavLink></div>

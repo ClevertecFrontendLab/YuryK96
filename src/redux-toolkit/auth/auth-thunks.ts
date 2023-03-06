@@ -1,7 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError, AxiosResponse } from 'axios';
 import { AppDispatch, AppStateType } from '../store';
-import { authAPI, AuthorizationType, CreateNewUserType, UserType } from '../../api/auth';
+import {
+    authAPI,
+    AuthorizationType,
+    CreateNewUserType,
+    ResetPasswordType,
+    UserType
+} from '../../api/auth';
 import { DefaultResponseTypes } from './auth-type';
 
 
@@ -40,6 +46,34 @@ export const authorization = createAppAsyncThunk(
         } catch (error) {
             const err = error as AxiosError;
             return rejectWithValue( String(err.response?.status));
+        }
+    }
+);
+export const sendEmail = createAppAsyncThunk(
+    'auth/forgot-password',
+    async (data: {email: string}, { rejectWithValue }) => {
+        try {
+
+            const response  = await authAPI.sendEmail(data).then( (res)=> res.data);
+
+            return response
+        } catch (error) {
+            const err = error as AxiosError;
+            return rejectWithValue( String(err.message));
+        }
+    }
+);
+export const resetPassword = createAppAsyncThunk(
+    'auth/reset-password',
+    async (data: ResetPasswordType, { rejectWithValue }) => {
+        try {
+
+            const response  = await authAPI.resetPassword(data).then( (res)=> res.data);
+
+            return response
+        } catch (error) {
+            const err = error as AxiosError;
+            return rejectWithValue( String(err.message));
         }
     }
 );

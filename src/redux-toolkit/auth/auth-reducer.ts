@@ -2,7 +2,7 @@
 import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { StatusRequestEnum } from '../books/books-type';
-import { authorization, registration } from './auth-thunks';
+import { authorization, registration, resetPassword, sendEmail } from './auth-thunks';
 import { InitialStateType } from './auth-type';
 import { getBook } from '../books/books-thunks';
 
@@ -32,19 +32,45 @@ const authSlice = createSlice({
                 state.authStatus = StatusRequestEnum.Success;
                 state.authError = null;
             }
-        }) .addMatcher(isError, (state, action: PayloadAction<string>)=>{
-            state.authStatus = StatusRequestEnum.Error;
-            state.authError = action.payload;
-        }).addMatcher(isPending, (state, action: PayloadAction)=>{
+        }) .addCase(sendEmail.fulfilled, (state, action) => {
+            if (action.payload) {
+                state.authStatus = StatusRequestEnum.Success;
+                state.authError = null;
+            }
+        }).addCase(resetPassword.fulfilled, (state, action) => {
+            if (action.payload) {
+                state.authStatus = StatusRequestEnum.Success;
+                state.authError = null;
+            }
+        }).addCase(registration.pending, (state, action) => {
             state.authStatus = StatusRequestEnum.Pending;
             state.authError = null;
+        }).addCase(resetPassword.pending, (state, action) => {
+            state.authStatus = StatusRequestEnum.Pending;
+            state.authError = null;
+        }).addCase(authorization.pending, (state, action) => {
+            state.authStatus = StatusRequestEnum.Pending;
+            state.authError = null;
+        }) .addCase(sendEmail.pending, (state, action) => {
+            state.authStatus = StatusRequestEnum.Pending;
+            state.authError = null;
+
+        }).addCase(registration.rejected, (state, action) => {
+            state.authStatus = StatusRequestEnum.Error;
+            state.authError = action.payload as string
+        }).addCase(authorization.rejected, (state, action) => {
+            state.authStatus = StatusRequestEnum.Error;
+            state.authError = action.payload as string
+        }) .addCase(sendEmail.rejected, (state, action) => {
+            state.authStatus = StatusRequestEnum.Error;
+            state.authError = action.payload as string
+
+        }).addCase(resetPassword.rejected, (state, action) => {
+            state.authStatus = StatusRequestEnum.Error;
+            state.authError = action.payload as string
+
         })
     }
 });
-function isError(action: AnyAction){
-    return action.type.endsWith('rejected')
-}function isPending(action: AnyAction){
-    return action.type.endsWith('pending')
-}
 export const { clearAuthError } = authSlice.actions;
 export default authSlice.reducer;

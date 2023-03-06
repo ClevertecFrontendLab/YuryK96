@@ -9,7 +9,7 @@ import { FormValue } from '../password-recovery';
 export const Input: React.FC<FirstStepType> = ({
                                                    register,
                                                    getFieldState,
-    watch,
+    watch,authError,
                                                    setButtonCheckErrorStateFalse,
                                                    buttonCheckError
                                                }) => <div
@@ -26,11 +26,11 @@ export const Input: React.FC<FirstStepType> = ({
     })} autoComplete="off" required={true} />
 
     <label htmlFor="email" className="floating-label">E-mail</label>
-    <div data-test-id='hint'
-        className="authorization_container__secondNote"
-        style={!getFieldState('email').error && !buttonCheckError || !getFieldState('email').error && watch('email') !== '' ?  { borderTop: '1px solid #BFC4C9' } : { borderTop: '1px solid red' }}>
+    <div data-test-id='hint' style={{ color: 'red',  paddingLeft: '12px' }}
+        className={`authorization_container__secondNote ${!getFieldState('email').error && !buttonCheckError || !getFieldState('email').error && watch('email') !== '' ?  'grayBorderTop' : 'redBorderTop'} ${authError && 'redBorderTop' }`}
+       >
         {getFieldState('email').error && watch('email') !== '' || buttonCheckError && watch('email') !== ''  ?
-            <p style={{ color: 'red' }}>Введите корректный e-mail</p> : getFieldState('email').error && watch('email') === '' || buttonCheckError  && watch('email') === ''  ?  <p style={{ color: 'red' }}>Поле не может быть пустым</p> : null } </div>
+            <span >Введите корректный e-mail</span> : getFieldState('email').error && watch('email') === '' || buttonCheckError  && watch('email') === ''  ?  <span >Поле не может быть пустым</span> : authError ? <span>error</span> : null } </div>
 
     <div className="authorization_container__forgetPassword_email"><span>На это email  будет отправлено письмо с инструкциями по восстановлению пароля </span>
     </div>
@@ -43,6 +43,6 @@ type FirstStepType = {
     setButtonCheckErrorStateFalse: () => void
     buttonCheckError: boolean
     watch: UseFormWatch<FormValue>
-
+    authError: null | string
 };
 

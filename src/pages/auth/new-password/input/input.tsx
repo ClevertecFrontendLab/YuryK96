@@ -82,26 +82,26 @@ export const Input: React.FC<FirstStepType> = ({
         <div className="authorization_container__WrapperSecondInput">
             <div  className="authorization_container__WrapperIcons">
 
-                { watch('repeatPassword')?.length > 0 && <img style={ {marginLeft:'25px'} } role="presentation" onClick={toggleRepeatPasswordVisiblity} data-test-id={passwordShown ? 'eye-opened' : 'eye-closed'}
+                { watch('passwordConfirmation')?.length > 0 && <img style={ {marginLeft:'25px'} } role="presentation" onClick={toggleRepeatPasswordVisiblity} data-test-id={passwordShown ? 'eye-opened' : 'eye-closed'}
                                                         src={repeatPasswordShown ? openEye : closeEye} alt="eye" />}</div>
             <input id="repeatPassword" className="authorization_container__secondInput"
                    onFocus={ ()=> {
                        setButtonCheckErrorStateFalse()
                        setPasswordFocusStateTrue()
                    }}
-                   type={repeatPasswordShown ? 'text' : 'password'} {...register('repeatPassword', {
+                   type={repeatPasswordShown ? 'text' : 'password'} {...register('passwordConfirmation', {
                 onBlur: () => setPasswordFocusStateFalse(),
                 required: true,
                 validate: {
-                    matchPasswords: ()=> watch('password') === watch('repeatPassword') || 'do not match'
+                    matchPasswords: ()=> watch('password') === watch('passwordConfirmation') || 'do not match'
                 }
             })} autoComplete="off" required={true}  />
 
             <label htmlFor="repeatPassword" className="floating-label">Повторить пароль</label>
 
             <div data-test-id='hint'
-                className="authorization_container__secondNote"  style={!getFieldState('repeatPassword').error && !buttonCheckError ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} } >
-                <div style={ {height:'16px'} } >  {getFieldState('repeatPassword').error || buttonCheckError ?
+                className="authorization_container__secondNote"  style={!getFieldState('passwordConfirmation').error && !buttonCheckError ? {borderTop: '1px solid #BFC4C9'} : {borderTop: '1px solid red'} } >
+                <div style={ {height:'16px'} } >  {getFieldState('passwordConfirmation').error || buttonCheckError ?
                     <p style={{ color: 'red' }}>Пароли не совпадают</p> : null} </div>  </div>
 
         </div>

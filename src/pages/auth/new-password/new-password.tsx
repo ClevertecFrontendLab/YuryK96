@@ -2,18 +2,20 @@ import React, { useEffect, useState } from 'react';
 import {
     useForm
 } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
 import s from './new-passord.module.scss';
 import '../../../common/styles/authorization.scss';
 import { Button } from '../../../common/button';
-import rightArrow from '../../../assets/images/authorization/rightArrow.svg';
-import leftArrow from '../../../assets/images/authorization/leftArrow.svg';
 import { useWindowSize } from '../../../hooks/window-size-hook';
 import { Input } from './input';
+import { AppDispatch } from '../../../redux-toolkit/store';
+import { resetPassword } from '../../../redux-toolkit/auth/auth-thunks';
+import { getAuthError } from '../../../redux-toolkit/auth/auth-selectos';
+import { AuthMessage } from '../../../common/auth-message';
+import { clearAuthError } from '../../../redux-toolkit/auth/auth-reducer';
 
 
-export const NewPassword: React.FC<NewPasswordType> = () => {
+export const NewPassword: React.FC<NewPasswordType> = ({urlCode}) => {
     const {
         register,
         handleSubmit,
@@ -26,9 +28,15 @@ export const NewPassword: React.FC<NewPasswordType> = () => {
     const [buttonCheckError, setButtonCheckError] = useState(false);
     const [firstStatusButton, setFirstStatusButton] = useState(true);
     const [isActiveButton, setIsActiveButton] = useState(true);
-
+    const [isPasswordsSent, setIsPasswordsSent] = useState(false);
+    const authError = useSelector(getAuthError)
     const { mobile } = useWindowSize();
+    const dispatch = useDispatch<AppDispatch>()
 
+    const handleSetIsPasswordsSent = ()=> {
+        setIsPasswordsSent(false)
+        dispatch(clearAuthError())
+    }
 
     useEffect(() => {
         if (isValid){
@@ -39,12 +47,12 @@ export const NewPassword: React.FC<NewPasswordType> = () => {
         else if (isActiveButton){
             setIsActiveButton(false)
         }
-
     }, [isValid, isActiveButton]);
 
 
     const onSubmit = (data: FormValue) => {
-        console.log(data);
+        dispatch(resetPassword( {...data, code: urlCode} ) )
+        setIsPasswordsSent(true)
     };
 
 
@@ -60,6 +68,13 @@ export const NewPassword: React.FC<NewPasswordType> = () => {
         setFirstStatusButton(false);
     };
 
+    if (authError && isPasswordsSent){
+        return <AuthMessage title='Данные не сохранились' message='Что-то пошло не так. Попробуйте ещё раз' buttonText='ПОВТОРИТЬ' clickEventButton={handleSetIsPasswordsSent} isClickEventButton={true} />
+    }
+
+    if (!authError && isPasswordsSent){
+        return <AuthMessage title='Новые данные сохранены' message='Зайдите в личный кабинет, используя свои логин и новый пароль' buttonText='ВХОД' buttonLink='/auth'/>
+    }
 
     return <section className="authorization_wrapper" data-test-id='auth'>
         <h1 className="authorization_title">Cleverland</h1>
@@ -104,9 +119,10 @@ export const NewPassword: React.FC<NewPasswordType> = () => {
 
 export type FormValue = {
     password: string,
-    repeatPassword: string
+    passwordConfirmation: string
 
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type NewPasswordType = {}
+type NewPasswordType = {
+    urlCode: string;
+}

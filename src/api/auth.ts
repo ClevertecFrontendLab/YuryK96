@@ -8,6 +8,11 @@ export const authAPI = {
     }  ,
     authorization(  data:AuthorizationType ) {
         return authAxios.post<DefaultResponseTypes> ('auth/local', {...data}).then((res) => res);
+    },
+    sendEmail(  data: {email: string} ) {
+        return authAxios.post<DefaultResponseTypes> ('auth/forgot-password', {...data}).then((res) => res);
+    }, resetPassword(  data: ResetPasswordType ) {
+        return authAxios.post<DefaultResponseTypes> ('auth/reset-password', {...data}).then((res) => res);
     }
 };
 
@@ -37,4 +42,10 @@ export type UserType = {
 export type AuthorizationType = {
     identifier: string,
     password: string
+}
+
+export type ResetPasswordType = {
+    password: string,
+    passwordConfirmation: string,
+    code: string
 }
