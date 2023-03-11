@@ -20,10 +20,7 @@ export const Button: React.FC<ButtonType> = ({
                                                  clickEvent = () => {
                                                  },
                                                  isActive = true
-                                             }) => {
-  console.log(isDisabled)
-
-   return <button style={{ width, paddingTop, margin, height }}
+                                             }) => <button style={{ width, paddingTop, margin, height }}
             type="button"
             disabled={!isDisabled}
             data-test-id={id} onClick={clickEvent}
@@ -39,7 +36,6 @@ export const Button: React.FC<ButtonType> = ({
         {!!bookPageText && bookPageText}
 
     </button>
-}
 type ButtonType = {
     booking?: null | BookingType;
     isBookPage?: boolean;

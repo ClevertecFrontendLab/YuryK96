@@ -77,7 +77,7 @@ export const Input: React.FC<FirstStepType> = ({
             <div className="authorization_container__WrapperIcons">
 
                 {watch('passwordConfirmation')?.length > 0 &&
-                    <img style={{ marginLeft: '25px' }} role="presentation"
+                    <img style={{ marginLeft: '29px' }} role="presentation"
                          onClick={toggleRepeatPasswordVisiblity}
                          data-test-id={passwordShown ? 'eye-opened' : 'eye-closed'}
                          src={repeatPasswordShown ? openEye : closeEye} alt="eye" />}</div>

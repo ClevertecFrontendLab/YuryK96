@@ -37,7 +37,7 @@ root.render(
             </Route>
             <Route path='/books/:category/:userId' element={<BookPage />} />
             <Route path='/Profile' element={<div> Profile </div>} />
-            <Route path='/exit' element={<div> exit </div>} />
+
           </Route>
             <Route path='/auth' element={<Authorization/>} />
             <Route path='/registration' element={<Registration/>} />

@@ -22,7 +22,7 @@ export const Navigation: React.FC<NavigationType> = ({
     id
                                                      }) => {
     const [isOpen, setIsOpen] = useState(true);
-    const { width1000 } = useWindowSize();
+
     const status = useSelector(getBooksStatus);
     const categoryStatus = useSelector(getCategoriesStatus);
     const [prevPath, setPrevPath] = useState<string | null>(null);
@@ -113,28 +113,7 @@ export const Navigation: React.FC<NavigationType> = ({
                     Договор оферты
                 </h1>
             </NavLink>
-            {!width1000 && <>
-                <hr />
-                <NavLink onClick={() => {
-                    setIsOpen(false);
-                    if (toggleMenu) {
-                        toggleMenu();
-                    }
-                }} to="/Profile">
-                    <div
-                        className={`${s.profile} ${pathname === '/Profile' && s.profileActive}`}>Профиль
-                    </div>
-                </NavLink>
-                <NavLink data-test-id='exit-button' onClick={() => {
-                    setIsOpen(false);
-                    if (toggleMenu) {
-                        toggleMenu();
-                    }
-                    localStorage.setItem('token', '')
-                }} to="/">
-                    <div   className={`${s.exit} ${pathname === '/exit' && s.exitActive}`}>Выход</div>
-                    {' '}
-                </NavLink> </>}
+
 
         </nav>
     );

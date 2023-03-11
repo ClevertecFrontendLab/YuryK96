@@ -13,7 +13,7 @@ import { Pending } from '../pending';
 import { getAuthStatus } from '../../redux-toolkit/auth/auth-selectos';
 
 
-export const AuthMessage:React.FC<AuthMessageType> = ( {title = 'Регистрация успешна', message= 'Регистрация прошла успешно. Зайдите в личный кабинет, используя свои логин и пароль', buttonText='ВХОД', reset = false ,buttonLink = '/' ,dataForm, isClickEventButton=false, clickEventButton = ()=>{}, isButton = true} )=> {
+export const AuthMessage:React.FC<AuthMessageType> = ( {title = 'Регистрация успешна', message= 'Регистрация прошла успешно. Зайдите в личный кабинет, используя свои логин и пароль', buttonText='ВХОД', reset = false ,buttonLink = '/' ,dataForm, isClickEventButton=false, pending = false, clickEventButton = ()=>{}, isButton = true} )=> {
     const navigate = useNavigate()
     const { mobile } = useWindowSize();
     const dispatch = useDispatch<AppDispatch>()
@@ -23,7 +23,7 @@ export const AuthMessage:React.FC<AuthMessageType> = ( {title = 'Регистр�
     }
  return    <section className="authorization_wrapper" data-test-id='auth'>
 
-     { authStatus === StatusRequestEnum.Pending && <Pending/> }
+     {!pending && authStatus === StatusRequestEnum.Pending && <Pending/> }
 
 
      <h1  className="authorization_title">Cleverland</h1>
@@ -56,4 +56,5 @@ type AuthMessageType = {
    reset?: boolean
     isClickEventButton? :  boolean
     clickEventButton?: ()=> void
+    pending?: boolean
 };

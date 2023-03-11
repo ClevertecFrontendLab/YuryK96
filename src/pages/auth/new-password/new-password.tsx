@@ -11,10 +11,12 @@ import { useWindowSize } from '../../../hooks/window-size-hook';
 import { Input } from './input';
 import { AppDispatch } from '../../../redux-toolkit/store';
 import { resetPassword } from '../../../redux-toolkit/auth/auth-thunks';
-import { getAuthError } from '../../../redux-toolkit/auth/auth-selectos';
+import { getAuthError, getAuthStatus } from '../../../redux-toolkit/auth/auth-selectos';
 import { AuthMessage } from '../../../common/auth-message';
 import { clearAuthError } from '../../../redux-toolkit/auth/auth-reducer';
 import { useIsAuth } from '../../../hooks/is-auth-hook';
+import { StatusRequestEnum } from '../../../redux-toolkit/books/books-type';
+import { Pending } from '../../../common/pending';
 
 
 export const NewPassword: React.FC<NewPasswordType> = ({urlCode}) => {
@@ -34,6 +36,7 @@ export const NewPassword: React.FC<NewPasswordType> = ({urlCode}) => {
     const { mobile } = useWindowSize();
     const dispatch = useDispatch<AppDispatch>()
     const isAuth= useIsAuth()
+    const authStatus = useSelector(getAuthStatus)
     const navigate = useNavigate()
     const [isPasswordFocus, setIsPasswordFocus] = useState<boolean | null>(null);
     const [isPasswordRepeatFocus, setIsPasswordRepeatFocus] = useState<boolean | null>(null);
@@ -65,9 +68,11 @@ export const NewPassword: React.FC<NewPasswordType> = ({urlCode}) => {
 
 
 
-    const onSubmit = (data: FormValue) => {
-        dispatch(resetPassword( {...data, code: urlCode} ) )
-        setIsPasswordsSent(true)
+    const onSubmit = async (data: FormValue) => {
+      await  dispatch(resetPassword( {...data, code: urlCode} ) ).then(
+          ()=>  setIsPasswordsSent(true)
+      )
+
     };
 
 
@@ -83,15 +88,16 @@ export const NewPassword: React.FC<NewPasswordType> = ({urlCode}) => {
         setFirstStatusButton(false);
     };
 
-    if (authError && isPasswordsSent){
+    if (authError && isPasswordsSent && authStatus ){
         return <AuthMessage title='Данные не сохранились' message='Что-то пошло не так. Попробуйте ещё раз' buttonText='ПОВТОРИТЬ' clickEventButton={handleSetIsPasswordsSent} isClickEventButton={true} />
     }
 
-    if (!authError && isPasswordsSent){
-        return <AuthMessage title='Новые данные сохранены' message='Зайдите в личный кабинет, используя свои логин и новый пароль' buttonText='ВХОД' buttonLink='/auth'/>
+    if (!authError && isPasswordsSent && authStatus ){
+        return <AuthMessage title='Новые данные сохранены' pending={true} message='Зайдите в личный кабинет, используя свои логин и новый пароль' buttonText='ВХОД' buttonLink='/auth'/>
     }
 
     return <section className="authorization_wrapper" data-test-id='auth'>
+        { authStatus === StatusRequestEnum.Pending && <Pending/> }
         <h1 className="authorization_title">Cleverland</h1>
         <div className="authorization_item">
             <div className="authorization_container authorization_container_personalArea">
