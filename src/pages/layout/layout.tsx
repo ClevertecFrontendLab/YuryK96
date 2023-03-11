@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import { Error } from '../../common/error';
 import { Pending } from '../../common/pending';
@@ -16,6 +16,7 @@ import { Footer } from '../footer';
 import { Header } from '../header';
 
 import s from './layout.module.scss';
+import { useIsAuth } from '../../hooks/is-auth-hook';
 
 
 export const Layout = () => {
@@ -23,9 +24,20 @@ export const Layout = () => {
     const categoriesStatus = useSelector(getCategoriesStatus)
     const booksStatus = useSelector(getBookStatus)
     const dispatch = useDispatch<AppDispatch>()
+    const isAuth = useIsAuth()
+    const navigate = useNavigate()
+
 
     useEffect( ()=>{
-        dispatch(getCategories())
+        if(isAuth === false){
+            navigate('/auth')
+        }
+    },[isAuth,navigate] )
+
+    useEffect( ()=>{
+        if ( localStorage.getItem('token')) {
+            dispatch(getCategories())
+        }
     },[dispatch] )
 
 

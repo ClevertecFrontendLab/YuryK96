@@ -1,9 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     useForm
 } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import s from './registration.module.scss';
@@ -22,6 +22,7 @@ import { Pending } from '../../../common/pending';
 import { getAuthError, getAuthStatus } from '../../../redux-toolkit/auth/auth-selectos';
 import { AuthMessage } from '../../../common/auth-message';
 import { clearAuthError } from '../../../redux-toolkit/auth/auth-reducer';
+import { useIsAuth } from '../../../hooks/is-auth-hook';
 
 
 export const Registration: React.FC = () => {
@@ -41,7 +42,16 @@ export const Registration: React.FC = () => {
     const { mobile } = useWindowSize();
     const authStatus = useSelector(getAuthStatus)
     const authError = useSelector(getAuthError)
+    const isAuth= useIsAuth()
+    const navigate = useNavigate()
 
+
+    useEffect( ()=>{
+        if(isAuth){
+            navigate('/')
+        }
+
+    },[isAuth,navigate] )
 
 
 
@@ -79,7 +89,7 @@ export const Registration: React.FC = () => {
     };
 
 
-    return   <React.Fragment>{  authError === '400' ? <AuthMessage title='Данные не сохранились' message='Такой логин или e-mail уже записан в системе. Попробуйте зарегистрироваться по другому логину или e-mail.' buttonText='НАЗАД К РЕГИСТРИАЦИИ'   isClickEventButton={true} clickEventButton={nextStep} />: authError &&  authError !== '400' ? <AuthMessage title='Данные не сохранились' message='Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз' buttonText='ПОВТОРИТЬ'  isClickEventButton={true} clickEventButton={nextStep}  /> : stepNumber === 4 ? <AuthMessage title='Регистрация успешна' message='Регистрация прошла успешно. Зайдите в личный кабинет, используя свои логин и пароль' buttonText='ВХОД'   buttonLink='/auth' /> :  <section className="authorization_wrapper"  data-test-id='auth'>
+    return   <React.Fragment>{  authError === '400' ? <AuthMessage title='Данные не сохранились' message='Такой логин или e-mail уже записан в системе. Попробуйте зарегистрироваться по другому логину или e-mail.' buttonText='НАЗАД К РЕГИСТРАЦИИ'   isClickEventButton={true} clickEventButton={nextStep} />: authError &&  authError !== '400' ? <AuthMessage title='Данные не сохранились' message='Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз' buttonText='ПОВТОРИТЬ'  isClickEventButton={true} clickEventButton={nextStep}  /> : stepNumber === 4 ? <AuthMessage title='Регистрация успешна' message='Регистрация прошла успешно. Зайдите в личный кабинет, используя свои логин и пароль' buttonText='ВХОД'   buttonLink='/auth' /> :  <section className="authorization_wrapper"  data-test-id='auth'>
 
         { authStatus === StatusRequestEnum.Pending && <Pending/> }
 
@@ -110,6 +120,8 @@ export const Registration: React.FC = () => {
                     </div>
 
                     <div className="authorization_container__buttonWrapper">
+                        <div className={`buttonCheckError__wrapper ${isValid && 'hidden' }`} role='presentation' onClick={ setButtonCheckErrorStateTrue} />
+                        <div role='presentation' onClick={ ()=> {console.log(1)} }>
                         <Button clickEvent={isValid ? nextStep : setButtonCheckErrorStateTrue}
                                 bookPageText={stepNumber === 1 ? 'СЛЕДУЮЩИЙ ШАГ' :
                                     stepNumber === 2 ? 'ПОСЛЕДНИЙ ШАГ' : 'ЗАРЕГИСТРИРОВАТЬСЯ'
@@ -117,8 +129,8 @@ export const Registration: React.FC = () => {
                                 height={mobile ? '40px' : '52px'}
                                 margin="18px 0"
                                 paddingTop="5px"
-
-                                textClass="registrationButtonText" />
+                                isDisabled = {isValid }
+                                textClass="registrationButtonText" /></div>
                         <div className="question_authorization"><p> Есть учетная запись?</p> <NavLink
                             to="/auth">
                             <div className="question_authorization__wrapperLink"><span> Войти</span>

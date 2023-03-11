@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {
     useForm
 } from 'react-hook-form';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import s from './password-recovery.module.scss';
@@ -19,6 +19,7 @@ import { AuthMessage } from '../../../common/auth-message';
 import { getAuthError } from '../../../redux-toolkit/auth/auth-selectos';
 import { clearAuthError } from '../../../redux-toolkit/auth/auth-reducer';
 import { NewPassword } from '../new-password';
+import { useIsAuth } from '../../../hooks/is-auth-hook';
 
 
 
@@ -36,9 +37,27 @@ export const PasswordRecovery: React.FC<PasswordRecoveryType> = () => {
     const [isNewPasswordPage, setIsNewPasswordPage] = useState(false);
     const [urlCode, setUrlCode] = useState('');
     const authError = useSelector(getAuthError)
-    const location = useLocation()
     const { mobile } = useWindowSize();
+    const isAuth= useIsAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
 
+    useEffect( ()=>{
+        const url = new URLSearchParams(location.search)
+        const urlCode = url.get('code')
+
+        if (urlCode){
+            setUrlCode(urlCode)
+            setIsNewPasswordPage(true)
+        }
+    },[location.search] )
+
+    useEffect( ()=>{
+        if(isAuth){
+            navigate('/')
+        }
+
+    },[isAuth,navigate] )
     const handleClearAuthError = ()=> {
         dispatch ( clearAuthError() )
     }
@@ -46,15 +65,7 @@ export const PasswordRecovery: React.FC<PasswordRecoveryType> = () => {
         dispatch ( sendEmail(data) )
         setIsEmailSent(true)
     };
-    useEffect( ()=>{
-        const url = new URLSearchParams(location.search)
-        const urlCode = url.get('code')
 
-            if (urlCode){
-                setUrlCode(urlCode)
-                setIsNewPasswordPage(true)
-            }
-    },[location.search] )
 
     const setButtonCheckErrorStateTrue = () => {
         setButtonCheckError(true);
@@ -75,6 +86,7 @@ export const PasswordRecovery: React.FC<PasswordRecoveryType> = () => {
     if (isEmailSent && !authError) {
         return <AuthMessage isButton={false} title='Письмо выслано' message='Перейдите в вашу почту, чтобы воспользоваться подсказками по восстановлению пароля'/>
     }
+
 
     return   <section className="authorization_wrapper"   data-test-id='auth'>
         <h1 className="authorization_title">Cleverland</h1>

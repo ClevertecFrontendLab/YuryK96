@@ -3,6 +3,7 @@ import {
     useForm
 } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import s from './new-passord.module.scss';
 import '../../../common/styles/authorization.scss';
 import { Button } from '../../../common/button';
@@ -13,6 +14,7 @@ import { resetPassword } from '../../../redux-toolkit/auth/auth-thunks';
 import { getAuthError } from '../../../redux-toolkit/auth/auth-selectos';
 import { AuthMessage } from '../../../common/auth-message';
 import { clearAuthError } from '../../../redux-toolkit/auth/auth-reducer';
+import { useIsAuth } from '../../../hooks/is-auth-hook';
 
 
 export const NewPassword: React.FC<NewPasswordType> = ({urlCode}) => {
@@ -27,27 +29,40 @@ export const NewPassword: React.FC<NewPasswordType> = ({urlCode}) => {
 
     const [buttonCheckError, setButtonCheckError] = useState(false);
     const [firstStatusButton, setFirstStatusButton] = useState(true);
-    const [isActiveButton, setIsActiveButton] = useState(true);
     const [isPasswordsSent, setIsPasswordsSent] = useState(false);
     const authError = useSelector(getAuthError)
     const { mobile } = useWindowSize();
     const dispatch = useDispatch<AppDispatch>()
+    const isAuth= useIsAuth()
+    const navigate = useNavigate()
+    const [isPasswordFocus, setIsPasswordFocus] = useState<boolean | null>(null);
+    const [isPasswordRepeatFocus, setIsPasswordRepeatFocus] = useState<boolean | null>(null);
 
+
+    const setPasswordFocusStateTrue = () => {
+        setIsPasswordFocus(true);
+    };
+    const setPasswordFocusStateFalse = () => {
+        setIsPasswordFocus(false);
+    };
+    const setPasswordReapeatFocusStateTrue = () => {
+        setIsPasswordRepeatFocus(true);
+    };
+    const setPasswordRepeatFocusStateFalse = () => {
+        setIsPasswordRepeatFocus(false);
+    };
+
+    useEffect( ()=>{
+        if(isAuth){
+            navigate('/books/all')
+        }
+
+    },[isAuth,navigate] )
     const handleSetIsPasswordsSent = ()=> {
         setIsPasswordsSent(false)
         dispatch(clearAuthError())
     }
 
-    useEffect(() => {
-        if (isValid){
-            if(!isActiveButton){
-                setIsActiveButton(true)
-            }
-        }
-        else if (isActiveButton){
-            setIsActiveButton(false)
-        }
-    }, [isValid, isActiveButton]);
 
 
     const onSubmit = (data: FormValue) => {
@@ -88,6 +103,12 @@ export const NewPassword: React.FC<NewPasswordType> = ({urlCode}) => {
                         <Input register={register} getFieldState={getFieldState}
                                watch={watch}
                                buttonCheckError={buttonCheckError}
+                               isPasswordFocus={isPasswordFocus}
+                               isPasswordRepeatFocus={isPasswordRepeatFocus}
+                               setPasswordFocusStateTrue={setPasswordFocusStateTrue}
+                               setPasswordFocusStateFalse={setPasswordFocusStateFalse}
+                               setPasswordRepeatFocusStateFalse={setPasswordRepeatFocusStateFalse}
+                               setPasswordReapeatFocusStateTrue={setPasswordReapeatFocusStateTrue}
                                setButtonCheckErrorStateFalse={setButtonCheckErrorStateFalse}
                                getValues={getValues} errors={errors}
                         />
@@ -101,11 +122,11 @@ export const NewPassword: React.FC<NewPasswordType> = ({urlCode}) => {
                             setIsFirstStatusButtonFalse();
                         }}
                                 bookPageText="СОХРАНИТЬ ИЗМЕНЕНИЯ" width="100%"
-                                isActive={firstStatusButton? true : isActiveButton }
+                                isActive={isValid}
                                 height={mobile ? '40px' : '52px'}
                                 margin="0"
                                 paddingTop="5px"
-
+                                isDisabled = {  isPasswordFocus || isPasswordRepeatFocus ? true : isValid }
                                 textClass="registrationButtonText" />
                         <div style={{ marginTop: '16px' }} className="question_authorization"><p>После
                             сохранения войдите в библиотеку, используя новый пароль</p></div>

@@ -62,7 +62,7 @@
                 height: 64px;
 
                 span {
-                    @include text(12px,18px,600,$gray-black);
+                    @include text(12px,600,18px,$gray-black);
                     margin-left: 15px;
                 }
             }
@@ -181,18 +181,32 @@
             &__firstNote, &__secondNote {
                 padding-top: 2px;
                 width: 100%;
-                @include text(12px, 500, 16px, $gray);
+                @include text(12px, 500, 16px, rgb(244, 44, 79));
 
+
+                //span {
+                //    color: $gray;
+                //
+                //}
                 p {
                     padding-left: 12px;
+                    color: $gray;
                 }
             }
 
+            &__grayColor {
+                color: rgb(167, 167, 167);
+
+            }
+            &__redColor {
+                color: rgb(244, 44, 79)
+
+            }
 
             &__buttonWrapper {
                 width: 100%;
                 margin-top: $paddingLarge;
-
+                position: relative;
                 @media (max-width: 520px) {
                     margin-top: $paddingBig;
                 }
@@ -268,5 +282,16 @@
     border-top: 1px solid #BFC4C9;
 }
 .redBorderTop {
-    border-top: 1px solid red;
+    border-top: 1px solid rgb(244, 44, 79);
+}
+.buttonCheckError__wrapper {
+    position: absolute;
+ 
+        @include button;
+    height: 52px;
+    width: inherit;
+
+}
+.hidden {
+    display: none;
 }

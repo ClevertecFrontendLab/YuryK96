@@ -42,7 +42,8 @@ root.render(
             <Route path='/auth' element={<Authorization/>} />
             <Route path='/registration' element={<Registration/>} />
             <Route path='/forgot-pass' element={<  PasswordRecovery/>} />
-            {/* <Route path='/forgot-pass' element={<NewPassword/>} /> */}
+
+
 
         </Routes>
       </HashRouter>

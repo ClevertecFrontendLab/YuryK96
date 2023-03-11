@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import s from './burgerButton.module.scss';
 import { Navigation } from '../../navigation';
 
-export const BurgerButton: React.FC<BurgerButtonType> = ({ toggleMenu, isOpen }) => {
-  const { pathname } = useLocation();
 
-  return (
+export const BurgerButton: React.FC<BurgerButtonType> = ({ toggleMenu, isOpen }) => (
     <div className={s.burgerButton}>
       <div className={s.ButtonContainer}>
         <div
@@ -33,7 +31,7 @@ export const BurgerButton: React.FC<BurgerButtonType> = ({ toggleMenu, isOpen })
             : {}
         }
       />
-      <div data-test-id='burger-navigation' className={`${s.menuButton} ${isOpen && s.menuButtonOpen}`}>
+      <div data-test-id='burger-navigation' className={`${s.menuButton} ${isOpen && s.menuButtonOpen}`} >
         <div className={s.menuButtonWrapper}>
           <Navigation
             idContract='burger-contract'
@@ -48,7 +46,6 @@ export const BurgerButton: React.FC<BurgerButtonType> = ({ toggleMenu, isOpen })
       </div>
     </div>
   );
-};
 
 type BurgerButtonType = {
   isOpen: boolean;

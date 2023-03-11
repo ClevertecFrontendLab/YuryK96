@@ -17,8 +17,12 @@ export const Header: React.FC = () => {
       setIsOpen(false);
     }
   };
+
+  const clearJWTToken = ()=> {
+      localStorage.setItem('token','')
+  }
   return (
-    <section className={s.header}>
+    <section className={s.header} >
       <div className={s.wrapper}>
         <div className={s.logo}>
           {' '}
@@ -45,10 +49,17 @@ export const Header: React.FC = () => {
 
       <div className={s.account}>
         <div className={s.name}>Привет, Иван</div>
-        <div>
+        <div role='presentation' onClick={toggleMenu} >
           <img alt='avatar' src={avatar} />
+
         </div>
+          <div className={`${s.account_menu} ${isOpen ? s.account_menu_open : ''} `}>
+              <div className={s.account_profile}><NavLink to='/profile' >Профиль </NavLink> </div>
+              <div role='presentation' onClick={clearJWTToken} className={s.account_exit}> <NavLink to='/'>Выход </NavLink> </div>
+          </div>
+          {isOpen && <div className={s.header_border_bottom}/>}
       </div>
+
     </section>
   );
 };

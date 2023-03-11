@@ -10,6 +10,7 @@ import {
 import s from './navigation.module.scss';
 import { useWindowSize } from '../../hooks/window-size-hook';
 import { StatusRequestEnum } from '../../redux-toolkit/books/books-type';
+import { useIsAuth } from '../../hooks/is-auth-hook';
 
 
 export const Navigation: React.FC<NavigationType> = ({
@@ -124,13 +125,14 @@ export const Navigation: React.FC<NavigationType> = ({
                         className={`${s.profile} ${pathname === '/Profile' && s.profileActive}`}>Профиль
                     </div>
                 </NavLink>
-                <NavLink onClick={() => {
+                <NavLink data-test-id='exit-button' onClick={() => {
                     setIsOpen(false);
                     if (toggleMenu) {
                         toggleMenu();
                     }
-                }} to="/exit">
-                    <div className={`${s.exit} ${pathname === '/exit' && s.exitActive}`}>Выход</div>
+                    localStorage.setItem('token', '')
+                }} to="/">
+                    <div   className={`${s.exit} ${pathname === '/exit' && s.exitActive}`}>Выход</div>
                     {' '}
                 </NavLink> </>}
 

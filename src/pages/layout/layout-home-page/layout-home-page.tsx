@@ -15,7 +15,8 @@ export const LayoutHomePage = () => {
     const dispatch = useDispatch<AppDispatch>()
 
     useEffect( ()=>{
-        dispatch(getBooks())
+        if ( localStorage.getItem('token')) {
+        dispatch(getBooks())}
 
     },[dispatch] )
 

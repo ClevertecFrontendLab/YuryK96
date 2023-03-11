@@ -25,6 +25,7 @@ export const getBooks = createAppAsyncThunk(
 export const getBook = createAppAsyncThunk(
     "api/book",
     async (id: string , { rejectWithValue }) => {
+
         try {
             return await booksAPI.getBook(id)  as Book;
 
@@ -37,6 +38,8 @@ export const getBook = createAppAsyncThunk(
 export const getCategories = createAppAsyncThunk(
     "api/categories",
     async (_, { rejectWithValue }) => {
+
+
         try {
             return await booksAPI.getCategories() as CategoryType[];
 

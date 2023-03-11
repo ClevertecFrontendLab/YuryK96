@@ -21,13 +21,13 @@ export const AuthMessage:React.FC<AuthMessageType> = ( {title = 'Регистр�
     const handleClearAuthError = ()=> {
         dispatch(clearAuthError())
     }
- return    <section className="authorization_wrapper" data-test-id='status-block'>
+ return    <section className="authorization_wrapper" data-test-id='auth'>
 
      { authStatus === StatusRequestEnum.Pending && <Pending/> }
 
 
      <h1  className="authorization_title">Cleverland</h1>
-        <div className="authorization_item">
+        <div data-test-id='status-block' className="authorization_item">
             <div className="authorization_container " style={ {minHeight:'auto'} }>
                 <h3 style={ { width:'100%' ,textAlign:'center'} } className="authorization_container__header">{title}</h3>
 

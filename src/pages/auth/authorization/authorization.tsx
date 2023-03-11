@@ -1,9 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     useForm
 } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import s from './authorization.module.scss';
 import '../../../common/styles/authorization.scss';
@@ -19,6 +19,7 @@ import { StatusRequestEnum } from '../../../redux-toolkit/books/books-type';
 import { Pending } from '../../../common/pending';
 import { AuthMessage } from '../../../common/auth-message';
 import { clearAuthError } from '../../../redux-toolkit/auth/auth-reducer';
+import { useIsAuth } from '../../../hooks/is-auth-hook';
 
 
 
@@ -37,6 +38,18 @@ export const Authorization: React.FC = () => {
     const authStatus = useSelector(getAuthStatus)
     const authError = useSelector(getAuthError)
     const { mobile } = useWindowSize();
+    const isAuth= useIsAuth()
+    const navigate = useNavigate()
+
+
+
+
+    useEffect( ()=>{
+        if(isAuth){
+            navigate('/books/all')
+        }
+
+    },[isAuth,navigate] )
 
     const handleClearAuthError = ()=> {
         dispatch(clearAuthError())
@@ -57,7 +70,7 @@ export const Authorization: React.FC = () => {
     };
 
 
-    return   <React.Fragment>{ authError && authError !== '400' ? <AuthMessage title='Данные не сохранились' message='Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз' buttonText='ПОВТОРИТЬ' buttonLink='/auth' reset={true} />: <section className="authorization_wrapper" data-test-id='auth'>
+    return   <React.Fragment>{ authError && authError !== '400' ? <AuthMessage title='Вход не выполнен' message='Что-то пошло не так. Попробуйте ещё раз' buttonText='ПОВТОРИТЬ' buttonLink='/auth' reset={true} />: <section className="authorization_wrapper" data-test-id='auth'>
 
 
         { authStatus === StatusRequestEnum.Pending && <Pending/> }
@@ -65,7 +78,7 @@ export const Authorization: React.FC = () => {
         <h1 className="authorization_title">Cleverland</h1>
         <div className="authorization_item">
             <div  className="authorization_container authorization_container_personalArea">
-                <h3 className="authorization_container__header">Вход в личный кабинет</h3>
+                <h3 className="authorization_container__header">Bход в личный кабинет</h3>
 
                 <form data-test-id='auth-form' onSubmit={handleSubmit(onSubmit)} >
                     <div className="authorization_container__form">

@@ -20,8 +20,8 @@ export const Inputs: React.FC<FirstStepType> = ({
                                                     buttonCheckError
                                                 }) => {
     const [passwordShown, setPasswordShown] = useState(false);
-    const [isLoginFocus, setIsLoginFocus] = useState(false);
-    const [isPasswordFocus, setIsPasswordFocus] = useState(false);
+    const [isLoginFocus, setIsLoginFocus] = useState<boolean | null>(null);
+    const [isPasswordFocus, setIsPasswordFocus] = useState<boolean | null>(null);
     const authError = useSelector(getAuthError)
     const togglePasswordVisiblity = () => {
         setPasswordShown(!passwordShown);
@@ -57,10 +57,10 @@ export const Inputs: React.FC<FirstStepType> = ({
 
             <label htmlFor="username" className="floating-label">Логин</label>
             <div data-test-id="hint"
-                 className={`authorization_container__firstNote  ${ !getFieldState('identifier').error && !buttonCheckError || watch('identifier') !== '' ? 'grayBorderTop' : 'redBorderTop'}  ${ authError === '400' && 'redBorderTop' }`}>
+                 className={`authorization_container__firstNote  ${ getFieldState('identifier').error && buttonCheckError || getFieldState('identifier').error && watch('identifier') === '' || getFieldState('identifier').error || isLoginFocus === false && watch('identifier') === '' || buttonCheckError && watch('identifier') === ''  ? 'redBorderTop ' : 'grayBorderTop'}  ${ authError === '400' && 'redBorderTop' }`}>
                 <div
-                    style={{ height: '16px' }}>{getFieldState('identifier').error || buttonCheckError && watch('identifier') === '' ?
-                    <p style={{ color: 'red' }}>Поле не должно быть пустым</p> : null} </div>
+                    style={{ height: '16px' }}>{getFieldState('identifier').error || buttonCheckError && watch('identifier') === '' || isLoginFocus === false && watch('identifier') === '' ?
+                    <span style={{ color: 'rgb(244, 44, 79)', marginLeft:'12px' }}>Поле не может быть пустым</span> : null} </div>
             </div>
         </div>
         <div className="authorization_container__WrapperSecondInput">
@@ -84,17 +84,18 @@ export const Inputs: React.FC<FirstStepType> = ({
             <label htmlFor="password" className="floating-label">Пароль</label>
 
             <div data-test-id="hint"
-                 className={`authorization_container__secondNote  ${ !getFieldState('password').error && !buttonCheckError || watch('password') !== '' ? 'grayBorderTop' :  'redBorderTop' }  ${ authError === '400' && 'redBorderTop' }`}>
-                <div
-                    style={{ height: '16px' }}>  {getFieldState('password').error || buttonCheckError && watch('password') === '' ?
-                    <p style={{ color: 'red' }}>Поле не должно быть пустым</p> : null} </div>
+                 className={`authorization_container__secondNote  ${ getFieldState('password').error && buttonCheckError || getFieldState('password').error && watch('password') === '' || getFieldState('password').error || isPasswordFocus === false && watch('password') === '' || buttonCheckError && watch('password') === '' ? 'redBorderTop ' : 'grayBorderTop'}  ${ authError === '400' && 'redBorderTop' }`}>
+
+                {getFieldState('password').error || buttonCheckError && watch('password') === '' || isPasswordFocus === false && watch('password') === '' ?
+                    <span style={{ marginLeft:'12px', color: 'rgb(244, 44, 79)' }}>Поле не может быть пустым</span> : null}
+
+
+                { authError === '400' ?   <div role='presentation' onClick={handleClearAuthError} className='authorization_container__wrongPassword'><span style={ {color:'rgb(244, 44, 79)'} } >Неверный логин или пароль!</span> <NavLink to="/forgot-pass"> <span style={ {display: 'block'} } >Восстановить?</span> </NavLink>  </div>  :   <div role='presentation' onClick={handleClearAuthError}  className="authorization_container__forgetPassword"><NavLink to="/forgot-pass">
+                    <span>Забыли логин или пароль?</span></NavLink>     </div>  }
+
             </div>
 
-            <div data-test-id="hint">
-                { authError === '400' ?   <div role='presentation' onClick={handleClearAuthError} className='authorization_container__wrongPassword'><span style={ {color:'red'} } >Неверный логин или пароль!</span> <NavLink to="/forgot-pass"> <span style={ {display: 'block'} } >Восстановить?</span> </NavLink>  </div>  :   <div role='presentation' onClick={handleClearAuthError}  className="authorization_container__forgetPassword"><NavLink to="/forgot-pass">
-                    <span>Забыли логин и пароль?</span></NavLink>     </div>  }
 
-            </div>
 
 
         </div>
