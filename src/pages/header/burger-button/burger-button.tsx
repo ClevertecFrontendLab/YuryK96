@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import s from './burgerButton.module.scss';
 import { Navigation } from '../../navigation';
+import { useWindowSize } from '../../../hooks/window-size-hook';
 
-export const BurgerButton: React.FC<BurgerButtonType> = ({ toggleMenu, isOpen }) => {
-  const { pathname } = useLocation();
 
-  return (
-    <div className={s.burgerButton}>
+export const BurgerButton: React.FC<BurgerButtonType> = ({ toggleMenu, isOpen }) =>{
+    const { width1000 } = useWindowSize();
+
+ return   <div className={s.burgerButton}>
       <div className={s.ButtonContainer}>
         <div
           data-test-id='button-burger'
@@ -18,6 +19,7 @@ export const BurgerButton: React.FC<BurgerButtonType> = ({ toggleMenu, isOpen })
           <span className={`${s.mediumLine} ${isOpen && s.mediumLineActiveFirst}`} />
           <span className={`${s.mediumLine} ${isOpen && s.mediumLineActiveSecond}`} />
         </div>
+
       </div>
       <div
         role='presentation'
@@ -33,7 +35,8 @@ export const BurgerButton: React.FC<BurgerButtonType> = ({ toggleMenu, isOpen })
             : {}
         }
       />
-      <div data-test-id='burger-navigation' className={`${s.menuButton} ${isOpen && s.menuButtonOpen}`}>
+
+      <div data-test-id='burger-navigation' className={`${s.menuButton} ${isOpen && s.menuButtonOpen}`} >
         <div className={s.menuButtonWrapper}>
           <Navigation
             idContract='burger-contract'
@@ -45,10 +48,30 @@ export const BurgerButton: React.FC<BurgerButtonType> = ({ toggleMenu, isOpen })
           />
 
         </div>
+          {!width1000 && <>
+              <hr />
+              <NavLink onClick={() => {
+
+                  if (toggleMenu) {
+                      toggleMenu();
+                  }
+              }} to="/Profile">
+                  <h1
+                      className={`${s.profile} `}>Профиль
+                  </h1>
+              </NavLink>
+              <NavLink  onClick={() => {
+                  if (toggleMenu) {
+                      toggleMenu();
+                  }
+                  localStorage.setItem('token', '')
+              }} to="/">
+                  <h1  data-test-id='exit-button' className={`${s.exit} `}>Выход</h1>
+                  {' '}
+              </NavLink> </>}
       </div>
     </div>
-  );
-};
+  }
 
 type BurgerButtonType = {
   isOpen: boolean;

@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../redux-toolkit/books/store";
-import { searchBooks } from "../../../redux-toolkit/books/books-reducer";
+import { useDispatch } from 'react-redux';
+
 import { useWindowSize } from '../../../hooks/window-size-hook';
+import { searchBooks } from '../../../redux-toolkit/books/books-reducer';
+import { AppDispatch } from '../../../redux-toolkit/store';
 
 import { FilterButton } from './filter-button';
 
@@ -14,12 +15,12 @@ import s from './search-panel.module.scss';
 
 
 
-export const SearchPanel: React.FC<SearchPanel> = ({ handleSetIsSortingList, isSortingList,toggleRatingSort, category,removeSearchText,addSearchText }) => {
+export const SearchPanel: React.FC<SearchPanel> = ({ handleSetIsSortingList, isSortingList,toggleRatingSort, category,addSearchText }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const dispatch = useDispatch<AppDispatch>()
 
   const windowWidth = useWindowSize();
-  const { register, getValues, setFocus, setValue } = useForm<Inputs>();
+  const { register, getValues, setFocus } = useForm<Inputs>();
 
 
 

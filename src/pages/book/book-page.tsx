@@ -18,7 +18,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "./swiper-style.scss";
 import { BookComments } from "./book-comments";
-import { AppDispatch, AppStateType } from "../../redux-toolkit/books/store";
+import { AppDispatch, AppStateType } from "../../redux-toolkit/store";
 import bookCat from "../../assets/images/books/bookCat.svg";
 import { useWindowSize } from "../../hooks/window-size-hook";
 import { countStars } from "../../helpers/stars-helper";
@@ -208,9 +208,9 @@ export const BookPage: React.FC = () => {
 
                 <BookComments comments={book?.comments} />
 
-
-                <Button id="button-rating" isBookEstimate={true} booking={null}
-                        bookPageText="ОЦЕНИТЬ КНИГУ" />
+                <div className={s.buttonWrapper} >
+                <Button id="button-rating"  isBookEstimate={true} booking={null}
+                        bookPageText="ОЦЕНИТЬ КНИГУ" /></div>
             </div>}
         </section>
     );

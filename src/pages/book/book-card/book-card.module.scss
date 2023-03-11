@@ -125,6 +125,11 @@
             -webkit-box-orient: vertical;
         }
     }
+
+    .button {
+        display: flex;
+        justify-content: center;
+    }
 }
 .bookList {
   flex-direction: column;
@@ -236,6 +241,8 @@
         }
       }
       .button {
+          display: flex;
+          justify-content: end;
         grid-area: b;
           max-width: 274px;
 

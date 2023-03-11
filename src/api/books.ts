@@ -12,7 +12,7 @@ export const booksAPI = {
         return instance.get(`books/${id}`).then( (res)=>res.data )
     },
     getCategories( ){
-        return instance.get(`categories`).then( (res)=>res.data )
+        return instance.get('categories').then( (res)=>res.data )
     },
 
 }

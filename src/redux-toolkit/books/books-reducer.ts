@@ -3,7 +3,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { InitialStateType, StatusRequestEnum } from "./books-type";
 import { getBook, getBooks, getCategories } from "./books-thunks";
 import { findBooksFromCategory } from "../../helpers/find-books-from-category-helper";
-import React from "react";
 
 
 const booksSlice = createSlice({

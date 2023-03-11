@@ -1,4 +1,4 @@
-import { AppStateType } from './store';
+import { AppStateType } from '../store';
 import {  CategoryType } from './books-type';
 import { findBooksFromCategory } from '../../helpers/find-books-from-category-helper';
 
